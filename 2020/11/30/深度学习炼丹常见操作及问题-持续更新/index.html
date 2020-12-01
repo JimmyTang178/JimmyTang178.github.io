@@ -6,17 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>My First Blog | Hexo</title>
+  <title>深度学习炼丹常见操作及问题(持续更新) | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="First Chaptercontents Second Chaptercontents">
+  <meta name="description" content="众所周知，炼丹需要强大的计算资源，通常都是在服务器（集群）上进行炼丹。但是，对于新手来说，Linux命令不熟悉，远程登录软件不会用，python环境不会管理等等，分分钟劝退。曾经的我就是这样一个小小白，跳了许多坑，慢慢摸索着才上了道。所以就写一篇博客，随手记录一下常见的一些操作，会一直更新，免得自己忘记。这些是我个人使用的一些操作或者解决方案，不是放之四海而皆准的，请酌情参考哈！我的基本环境是：">
 <meta property="og:type" content="article">
-<meta property="og:title" content="My First Blog">
-<meta property="og:url" content="http://example.com/2020/11/30/My-First-Blog/index.html">
+<meta property="og:title" content="深度学习炼丹常见操作及问题(持续更新)">
+<meta property="og:url" content="http://example.com/2020/11/30/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%82%BC%E4%B8%B9%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C%E5%8F%8A%E9%97%AE%E9%A2%98-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="First Chaptercontents Second Chaptercontents">
+<meta property="og:description" content="众所周知，炼丹需要强大的计算资源，通常都是在服务器（集群）上进行炼丹。但是，对于新手来说，Linux命令不熟悉，远程登录软件不会用，python环境不会管理等等，分分钟劝退。曾经的我就是这样一个小小白，跳了许多坑，慢慢摸索着才上了道。所以就写一篇博客，随手记录一下常见的一些操作，会一直更新，免得自己忘记。这些是我个人使用的一些操作或者解决方案，不是放之四海而皆准的，请酌情参考哈！我的基本环境是：">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-12-01T02:01:39.000Z">
-<meta property="article:modified_time" content="2020-12-01T02:03:48.759Z">
+<meta property="article:published_time" content="2020-12-01T03:20:59.000Z">
+<meta property="article:modified_time" content="2020-12-01T03:22:08.545Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -154,28 +154,114 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-My-First-Blog" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-深度学习炼丹常见操作及问题-持续更新" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      My First Blog
+      深度学习炼丹常见操作及问题(持续更新)
     </h1>
   
 
         
-        <a href="/2020/11/30/My-First-Blog/" class="archive-article-date">
-  	<time datetime="2020-12-01T02:01:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-30</time>
+        <a href="/2020/11/30/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%82%BC%E4%B8%B9%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C%E5%8F%8A%E9%97%AE%E9%A2%98-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/" class="archive-article-date">
+  	<time datetime="2020-12-01T03:20:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-30</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="First-Chapter"><a href="#First-Chapter" class="headerlink" title="First Chapter"></a>First Chapter</h2><p>contents</p>
-<h2 id="Second-Chapter"><a href="#Second-Chapter" class="headerlink" title="Second Chapter"></a>Second Chapter</h2><p>contents</p>
+        <p>众所周知，炼丹需要强大的计算资源，通常都是在服务器（集群）上进行炼丹。<br>但是，对于新手来说，Linux命令不熟悉，远程登录软件不会用，python环境不会管理等等，分分钟劝退。曾经的我就是这样一个小小白，跳了许多坑，慢慢摸索着才上了道。<br>所以就写一篇博客，随手记录一下常见的一些操作，会一直更新，免得自己忘记。这些是我个人使用的一些操作或者解决方案，不是放之四海而皆准的，请酌情参考哈！<br>我的基本环境是：</p>
+<ul>
+<li><p>CentOS</p>
+</li>
+<li><p> VSCode </p>
+</li>
+<li><p>Anaconda(python3.6.2)</p>
+<p>@[toc]</p>
+</li>
+</ul>
+<h2 id="配置远程登录"><a href="#配置远程登录" class="headerlink" title="配置远程登录"></a>配置远程登录</h2><p>远程我使用的是VSCode+Remote SSH拓展+OpenSSH<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_40313940/article/details/105866897">VSCode远程登录服务器</a></p>
+<h2 id="服务器基本操作"><a href="#服务器基本操作" class="headerlink" title="服务器基本操作"></a>服务器基本操作</h2><h5 id="服务器结点间跳转"><a href="#服务器结点间跳转" class="headerlink" title="服务器结点间跳转"></a>服务器结点间跳转</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh node2    <span class="comment">#当前结点跳转到结点node2</span></span><br></pre></td></tr></table></figure>
+<h5 id="查看服务器GPU使用情况"><a href="#查看服务器GPU使用情况" class="headerlink" title="查看服务器GPU使用情况"></a>查看服务器GPU使用情况</h5><p>在终端输入以下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvidia-smi    </span><br></pre></td></tr></table></figure>
+<h5 id="查看CUDA版本"><a href="#查看CUDA版本" class="headerlink" title="查看CUDA版本"></a>查看CUDA版本</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#终端输入</span></span><br><span class="line">nvcc -V</span><br><span class="line"><span class="comment">#或者</span></span><br><span class="line">cat /usr/<span class="built_in">local</span>/cuda/version.txt</span><br></pre></td></tr></table></figure>
+
+<h5 id="打包文件"><a href="#打包文件" class="headerlink" title="打包文件"></a>打包文件</h5><p>1、简单打包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zcvf mypackage.tar.gz file1 file2  <span class="comment">#file1,file2以tar.gz方式打包到mypackage.tar.gz包内</span></span><br></pre></td></tr></table></figure>
+<p>解包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf mypackage.tar.gz <span class="comment">#解压到当前目录</span></span><br><span class="line">tar -zxvf mypackage.tar.gz -C dir <span class="comment">#解压到dir目录</span></span><br></pre></td></tr></table></figure>
+<p>2、打包除指定文件外的文件夹</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zcvf mypackage.tar.gz --exclude=aa/b --exclude=aa/c aa/  <span class="comment">#打包aa文件夹内除了aa/b和aa/c之外的所有文件及文件夹</span></span><br></pre></td></tr></table></figure>
+<p>选项意义<br>|选项|意义|<br>|–|–|<br>|-c|创建打包文件|<br>|-t|查看打包文件内有哪些文件|<br>|-z|通过gzip进行压缩或解压，文件明最好为*.tar.gz|<br>|-j|通过bzip2进行压缩或者解压，文件名最好为*.tar.bz2|<br>|-v|在压缩解压过程中显示处理的文件名|<br>|-f filename|压缩或者解压的包的路径，-f必须放在选项组合的最后|<br>|-C|将文件解压到指定目录|<br>|-p|保留文件的原本权限和属性，用于备份数据|<br>|–exclude=FILE|压缩时排除指定文件或者文件夹|</p>
+<h5 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h5><p>Linux下删除文件<br>rm [-选项] 文件或目录<br>-f:不做确认提示，忽略不存在的文件，不会出现任何警告<br>-i:进行确认提示，删除前询问是否确认删除<br>-r:递归删除，可以删除目录<br>-v:在删除文件之前打印文件名称</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -f a.o</span><br></pre></td></tr></table></figure>
+<p>删除目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -r dir  <span class="comment">#dir是指定目录</span></span><br></pre></td></tr></table></figure>
+<p>删除特定开头的文件,只需要在特定开头后面加上*</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -r P*  <span class="comment">#删除以P开头的所有文件</span></span><br></pre></td></tr></table></figure>
+<h5 id="统计文件个数"><a href="#统计文件个数" class="headerlink" title="统计文件个数"></a>统计文件个数</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">find -<span class="built_in">type</span> f | wc -l </span><br><span class="line"><span class="comment">#如果要统计文件夹个数，将f改成d即可</span></span><br><span class="line">find -<span class="built_in">type</span> d | wc -l</span><br></pre></td></tr></table></figure>
+<h5 id="将程序放到后台运行"><a href="#将程序放到后台运行" class="headerlink" title="将程序放到后台运行"></a>将程序放到后台运行</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup python train.py &gt;train.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+<p>将train.py运行输出的内容重定向到train.log中，最后一个&amp;表示将程序放入后台运行。</p>
+<h5 id="查看程序运行时间"><a href="#查看程序运行时间" class="headerlink" title="查看程序运行时间"></a>查看程序运行时间</h5><p>先通过nvidia-smi或者top指令找到想查看的程序的pid号。<br>使用ps指令，按指定格式输出想要查看的信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -eo pid, tty, user, lstart, etime | grep 25542</span><br></pre></td></tr></table></figure>
+<p>其中-eo与|之间的内容表示希望输出的格式，pid表示这个进程的pid号，tty表示终端机连接标准输入设备的文件名称，user表示这个程序属于哪个用户，lstart表示程序开始时间，etime表示程序运行时间，25542表示想要查询的程序的pid。</p>
+<h2 id="Python及框架使用"><a href="#Python及框架使用" class="headerlink" title="Python及框架使用"></a>Python及框架使用</h2><h5 id="指定GPU训练模型"><a href="#指定GPU训练模型" class="headerlink" title="指定GPU训练模型"></a>指定GPU训练模型</h5><p>在你的训练的python文件中加入，指定使用序号为2的GPU</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">os.environ[<span class="string">&quot;CUDA_VISIBLE_DEVICES&quot;</span>] = <span class="string">&quot;2&quot;</span>  <span class="comment">#2代表GPU的序号，可以是一个，也可以是&#x27;0,1,2,3&#x27;这样的多个</span></span><br></pre></td></tr></table></figure>
+<h5 id="统计程序每个函数运行时间"><a href="#统计程序每个函数运行时间" class="headerlink" title="统计程序每个函数运行时间"></a>统计程序每个函数运行时间</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m cProfile -s cumtime yourscript.py  <span class="comment">#按cumtime时间排序</span></span><br></pre></td></tr></table></figure>
+<p>结果如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">2118852 <span class="keyword">function</span> calls (2074450 primitive calls) <span class="keyword">in</span> 52.258 seconds</span><br><span class="line"></span><br><span class="line">Ordered by: cumulative time</span><br><span class="line"></span><br><span class="line">   ncalls  tottime  percall  cumtime  percall filename:lineno(<span class="keyword">function</span>)</span><br><span class="line">   2317/1    0.033    0.000   53.050   53.050 &#123;built-in method builtins.exec&#125;</span><br><span class="line">        1    2.264    2.264   53.050   53.050 dataset.py:7(&lt;module&gt;)</span><br><span class="line">      626    0.002    0.000   45.739    0.073 dataloader.py:344(__next__)</span><br><span class="line">      626    0.012    0.000   45.737    0.073 dataloader.py:812(_next_data)</span><br><span class="line">      625    0.003    0.000   45.648    0.073 dataloader.py:779(_get_data)</span><br><span class="line">      625    0.005    0.000   45.646    0.073 dataloader.py:748(_try_get_data)</span><br><span class="line">      625    0.015    0.000   45.641    0.073 queues.py:91(get)</span><br><span class="line">      625    0.003    0.000   39.723    0.064 connection.py:253(poll)</span><br><span class="line">      625    0.005    0.000   39.719    0.064 connection.py:413(_poll)</span><br><span class="line">      625    0.014    0.000   39.714    0.064 connection.py:897(<span class="built_in">wait</span>)</span><br><span class="line">      625    0.014    0.000   39.668    0.063 selectors.py:365(select)</span><br><span class="line">      625   39.651    0.063   39.651    0.063 &#123;method <span class="string">&#x27;poll&#x27;</span> of <span class="string">&#x27;select.poll&#x27;</span> objects&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中参数意义为：<br>ncalls：表示函数调用的次数；<br>tottime：表示指定函数的总的运行时间，除掉函数中调用子函数的运行时间；<br>percall：（第一个percall）等于 tottime/ncalls；<br>cumtime：表示该函数及其所有子函数的调用运行的时间，即函数开始调用到返回的时间；<br>percall：（第二个percall）即函数运行一次的平均时间，等于 cumtime/ncalls；<br>filename:lineno(function)：每个函数调用的具体信息；</p>
+<h5 id="conda安装第三方库"><a href="#conda安装第三方库" class="headerlink" title="conda安装第三方库"></a>conda安装第三方库</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda install numpy     <span class="comment"># 最基本的情况将numpy替换成要安装的库即可</span></span><br><span class="line">conda install numpy==1.14.3   <span class="comment">#安装指定的版本</span></span><br></pre></td></tr></table></figure>
+<p>安装指定较老版本的pytorch和torchvision，GPU版。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install pytorch==0.4.0 torchvision cuda92  <span class="comment">#去掉cuda92安装cpu版本</span></span><br></pre></td></tr></table></figure>
+<p>安装最新的pytorch可以到<a target="_blank" rel="noopener" href="https://pytorch.org/get-started/locally/">pytorch官网</a>直接安装。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install pytorch torchvision cudatoolkit=10.2 -c pytorch</span><br></pre></td></tr></table></figure>
+<p>对于<strong>安装cv2</strong>，conda好像没有？？？</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#用</span></span><br><span class="line">conda install opencv</span><br><span class="line"><span class="comment">#安装的包在import cv2时会报</span></span><br><span class="line">ModuleNotFoundError: No module named <span class="string">&#x27;cv2&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>说明opencv这个包和cv2是不同的包。<br>然后我用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install opencv-python</span><br></pre></td></tr></table></figure>
+<p>发现在conda的channels里面没有找到这个包。</p>
+<p>最后，使用pip安装opencv-python成功，能够使用cv2库。<br>所以<font color=red>安装cv2推荐使用pip</font>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install opencv-python</span><br></pre></td></tr></table></figure>
+
+<h5 id="conda管理虚拟环境"><a href="#conda管理虚拟环境" class="headerlink" title="conda管理虚拟环境"></a>conda管理虚拟环境</h5><p>创建一个名为pytorch10,python版本为3.6的新环境</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create -n pytorch10 python=3.6</span><br></pre></td></tr></table></figure>
+<p>查看你创建了多少个虚拟环境</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda env list   <span class="comment">#或者</span></span><br><span class="line">conda info -e </span><br></pre></td></tr></table></figure>
+<p>激活你创建的环境,这样就可以使用你新建的环境了，可以正常滴安装需要的库。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda activate pytorch10 <span class="comment">#Linux Windows</span></span><br><span class="line"><span class="built_in">source</span> activate pytorch10  <span class="comment">#Linux下,若上面命令不行，使用这个命令</span></span><br></pre></td></tr></table></figure>
+<p>退出虚拟环境</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda deactivate pytorch10  <span class="comment">#退出pytorch10</span></span><br><span class="line"><span class="built_in">source</span> deactivate pytorch10  <span class="comment">#Linux下</span></span><br></pre></td></tr></table></figure>
+<p>删除不想要的虚拟环境</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda remove -n pytorch10 --all</span><br></pre></td></tr></table></figure>
+<p>安装指定版本pytorch,GPU版本的pytorch要和CUDA版本对应。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CUDA 9.2</span></span><br><span class="line">conda install pytorch==1.2.0 torchvision==0.4.0 cudatoolkit=9.2 -c pytorch</span><br><span class="line"><span class="comment"># CUDA 10.0</span></span><br><span class="line">conda install pytorch==1.2.0 torchvision==0.4.0 cudatoolkit=10.0 -c pytorch</span><br><span class="line"><span class="comment"># CPU Only</span></span><br><span class="line">conda install pytorch==1.2.0 torchvision==0.4.0 cpuonly -c pytorch</span><br></pre></td></tr></table></figure>
+<h5 id="pytorch需要注意的坑"><a href="#pytorch需要注意的坑" class="headerlink" title="pytorch需要注意的坑"></a>pytorch需要注意的坑</h5><p><strong>torchvision.transforms.ToTensor()</strong></p>
+<p>在加载数据的时候，经常需要用到这个类。其输入可以是PIL Image或者np.ndarray格式(包括cv2)。它会先将图像由HWC格式转换成CHW格式。</p>
+<p>对于<strong>ndarray</strong>，如果输入的数据类型是<strong>int型</strong>，那么ToTensor之后输出的将会<strong>是[0,1]归一化</strong>的结果。如果输入的数据类型是 <strong>float</strong>的，其输出数据**范围为[0,255]**。很多时候我们的模型输入是归一化的，如果不注意这一点，有可能会使模型loss很大，甚至出现nan。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> torch</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>transform = transforms.Compose([transforms.ToTensor()])</span><br><span class="line">&gt;&gt;&gt;<span class="comment">#整型</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>img1 = np.array([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]], dtype=np.uint8)</span><br><span class="line">&gt;&gt;&gt;<span class="comment">#float型</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>img2 = np.array([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]], dtype=np.float32)</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>img1 = transform(img1)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>img1     <span class="comment">#其数据范围[0-1]</span></span><br><span class="line">tensor([[[<span class="number">0.0039</span>, <span class="number">0.0078</span>, <span class="number">0.0118</span>],</span><br><span class="line">         [<span class="number">0.0157</span>, <span class="number">0.0196</span>, <span class="number">0.0235</span>]]])</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>img2 = transform(img2)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>img2 <span class="comment">#其数据范围[0-255.]</span></span><br><span class="line">tensor([[[<span class="number">1.</span>, <span class="number">2.</span>, <span class="number">3.</span>],</span><br><span class="line">         [<span class="number">4.</span>, <span class="number">5.</span>, <span class="number">6.</span>]]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>  </span><br></pre></td></tr></table></figure>
+<p>对于PILImage转化的Tensor，其数据类型是torch.FloatTensor。具体参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_37385726/article/details/81771980">博文1</a>、<a target="_blank" rel="noopener" href="https://blog.csdn.net/bl128ve900/article/details/93739325">博文2</a>。</p>
+<p><strong>THCudaCheck FAIL file=/opt/conda/conda-bld/pytorch_1579022034529/work/aten/src/THC/THCGeneral.cpp line=313 error=98 : invalid device function</strong></p>
+<p>新版本pytorch运行旧版本的代码时遇到的问题，我的解决方案是将cuda从9.2更新到10.1  。不知道大家还有什么好办法？？<br><a target="_blank" rel="noopener" href="https://discuss.pytorch.org/t/thcudacheck-fail-file-pytorch-aten-src-thc-thcgeneral-cpp/31788">解决方案</a></p>
+<p><strong>torch.load()加载训练好的模型时报错：CUDA out of memory</strong></p>
+<p>情况是训练时显存是充足的，但是在测试时加载模型就显示显存不够。<br>这个问题是torch.load()函数在加载模型参数时会默认加载在服务器的GPU0上，即使你使用了os.environ[“CUDA_VISIBLE_DEVICES”]指定使用了别的显卡也会这样。<br>解决方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net = torch,load(model_path, map_location=&#123;<span class="string">&#x27;cuda:0&#x27;</span> : <span class="string">&#x27;cuda:1&#x27;</span>&#125;)<span class="comment">#映射到别的显卡上</span></span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b43d0c2fe04f">pytorch的坑</a></p>
+<h2 id="常见报错"><a href="#常见报错" class="headerlink" title="常见报错"></a>常见报错</h2><p><strong>RuntimeError: cuda runtime error (59) : device-side assert triggered</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">&quot;train_RFB_MLP.py&quot;</span>, line 326, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    train()</span><br><span class="line">  File <span class="string">&quot;train_RFB_MLP.py&quot;</span>, line 283, <span class="keyword">in</span> train</span><br><span class="line">    loss.backward()</span><br><span class="line">  File <span class="string">&quot;/lustre/home/jmtang/anaconda3/envs/pytorch12/lib/python3.6/site-packages/torch/tensor.py&quot;</span>, line 118, <span class="keyword">in</span> backward</span><br><span class="line">    torch.autograd.backward(self, gradient, retain_graph, create_graph)</span><br><span class="line">  File <span class="string">&quot;/lustre/home/jmtang/anaconda3/envs/pytorch12/lib/python3.6/site-packages/torch/autograd/__init__.py&quot;</span>, line 93, <span class="keyword">in</span> backward</span><br><span class="line">    allow_unreachable=True)  <span class="comment"># allow_unreachable flag</span></span><br><span class="line">RuntimeError: cuda runtime error (59) : device-side assert triggered at /tmp/pip-req-build-p5q91txh/aten/src/THC/generic/THCTensorMath.cu:26</span><br></pre></td></tr></table></figure>
+<p>出现这个异常大概率是类别标签的问题，例如数据集共100类，对应的标签是0-99，而在全连接的最后输出维度或者目标检测的num_classes只指定为99，那就会造成类别索引溢出，从而报错。<br><strong>pytorch训练模型LOSS出现NAN</strong><br>造成损失值NAN爆炸的情况很多，可能有：</p>
+<ul>
+<li>数据有问题，例如检测框的位置超出图像范围或者左上角坐标大于右下角坐标。检查数据，剔除脏数据。</li>
+<li>学习率过大，可以调小学习率。</li>
+<li>优化器的问题，比如某些模型使用Adam训没问题，相同情况下用SGD可能也会出现NAN。可以更换优化器。</li>
+<li>计算的数组可能越界，或者除数可能为0 。</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="http://www.liuxiao.org/2020/06/pytorch-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%95%B4%E7%90%86/">参考1</a>、<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/89588946">参考2</a>、<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/49346370">参考3</a><br>To Be Continue…</p>
 
       
 
@@ -255,7 +341,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/11/30/My-First-Blog/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/11/30/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%82%BC%E4%B8%B9%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C%E5%8F%8A%E9%97%AE%E9%A2%98-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -269,18 +355,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/11/30/Python%E8%B0%83%E7%94%A8C-C-%E7%A8%8B%E5%BA%8F/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Python调用C/C++程序
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/11/30/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
+    <a href="/2020/11/30/Python%E8%B0%83%E7%94%A8C-C-%E7%A8%8B%E5%BA%8F/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Python调用C/C++程序</div>
       <i class="icon-circle-right"></i>
     </a>
   
