@@ -6,11 +6,11 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives | JimmyTang&#39;Blog</title>
+  <title>JimmyTang&#39;Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
 <meta property="og:title" content="JimmyTang&#39;Blog">
-<meta property="og:url" content="http://example.com/archives/index.html">
+<meta property="og:url" content="http://example.com/page/2/index.html">
 <meta property="og:site_name" content="JimmyTang&#39;Blog">
 <meta property="og:locale">
 <meta property="article:author" content="JimmyTang">
@@ -152,232 +152,341 @@
           <div id="js-content" class="content-ll">
             
   
-  
+    <article id="post-C++Primer-语句" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="语句"><a href="#语句" class="headerlink" title="语句"></a>语句</h1><p><strong>switch-case语句</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> aCnt = <span class="number">0</span>, iCnt = <span class="number">0</span>, eCnt = <span class="number">0</span>, oCnt = <span class="number">0</span>, uCnt = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">char</span> ch;</span><br><span class="line"><span class="keyword">while</span>(<span class="built_in">cin</span> &gt;&gt; ch)&#123;</span><br><span class="line">    <span class="keyword">switch</span> (ch)&#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;a&#x27;</span>:</span><br><span class="line">            ++aCnt;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;e&#x27;</span>:</span><br><span class="line">            ++eCnt;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;i&#x27;</span>:</span><br><span class="line">            ++iCnt;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;o&#x27;</span>:</span><br><span class="line">            ++oCnt;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;u&#x27;</span>:</span><br><span class="line">            ++uCnt;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span> :</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>case标签必须是整型常量表达式。</p>
+<p><strong>传统for循环</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (init-statement; condition; expression)</span><br><span class="line">    statement</span><br></pre></td></tr></table></figure>
+<p>能省略掉三个部分中任意一个或者全部。如果省略condition，则默认为true。<br>但是init-statement只能由一句声明语句，因此所有的变量基础类型必须相同。</p>
+<p><strong>范围for语句</strong><br>C++11新标准</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (declaration : expression)</span><br><span class="line">    statement</span><br></pre></td></tr></table></figure>
+
+<p><strong>while语句</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (condition)</span><br><span class="line">    statement</span><br></pre></td></tr></table></figure>
+<p><strong>do-while语句</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span> </span><br><span class="line">    statement</span><br><span class="line"><span class="keyword">while</span> (condition); <span class="comment">//注意分号</span></span><br></pre></td></tr></table></figure>
+<p>condition变量必须定义在循环体之外。</p>
+<h3 id="try语句块和异常处理"><a href="#try语句块和异常处理" class="headerlink" title="try语句块和异常处理"></a>try语句块和异常处理</h3><p><strong>throw表达式</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Sales_item item1, item2;</span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; item1 &gt;&gt; item2;</span><br><span class="line"><span class="keyword">if</span>(item1.isbn() != item2.isbn())&#123;</span><br><span class="line">    <span class="keyword">throw</span> runtime_error(<span class="string">&quot;Data must refer to the same ISBN&quot;</span>); <span class="comment">//字符串初始化一个runtime_error对象</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; item1 + item2 &lt;&lt;<span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>try语句块</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    program-statements</span><br><span class="line">&#125; </span><br><span class="line">    <span class="keyword">catch</span> (exception-declaration)&#123;</span><br><span class="line">        handle-statements</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (exception-declaration)&#123;</span><br><span class="line">        handle-statements</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>其中声明在try语句块内部的变量在外部无法访问，catch块中也是。</p>
+<p><strong>标准异常</strong><br>异常类包含在4个头文件中。</p>
+<ul>
+<li><p>exception头文件定义了最常用的异常类exception。只报告异常的发生，不提供任何额外信息。</p>
+</li>
+<li><p>stdexcept头文件定义了集中常用的异常类。</p>
+</li>
+<li><p>new头文件定义了bad_alloc异常类型。</p>
+</li>
+<li><p>type_info定义了bad_cast异常类。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>stdexcept定义的异常类</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>exception</td>
+<td>最常见的问题</td>
+</tr>
+<tr>
+<td>runtime_error</td>
+<td>只有运行时才能检测出来的问题</td>
+</tr>
+<tr>
+<td>range_error</td>
+<td>运行时错误：生成的结果超出了有意义的值域范围</td>
+</tr>
+<tr>
+<td>overflow_error</td>
+<td>运行时错误：计算上溢</td>
+</tr>
+<tr>
+<td>underflow_error</td>
+<td>运行时错误：计算下溢</td>
+</tr>
+<tr>
+<td>logic_error</td>
+<td>程序逻辑错误</td>
+</tr>
+<tr>
+<td>domain_error</td>
+<td>逻辑错误，参数对应的结果值不存在</td>
+</tr>
+<tr>
+<td>invalid_argument</td>
+<td>逻辑错误：无效参数</td>
+</tr>
+<tr>
+<td>length_error</td>
+<td>逻辑错误：试图创建一个超出该类型最大长度的对象</td>
+</tr>
+<tr>
+<td>out_of_range</td>
+<td>逻辑错误：使用一个超出有效范围的值</td>
+</tr>
+</tbody></table>
+<p>对于exception、bad_alloc、bad_cast，只能以默认初始化的方式初始化，不允许为这些对象赋初值。<br>而其他类型的对象恰好相反，应当使用string对象或者C风格字符串初始化这些类型的对象，不能使用默认初始化方式。<br>异常类型只定义了一个what()成员函数，没有任何参数,返回一个指向C风格字符串的const char*。</p>
+<blockquote>
+<p>小练习 ：<br>编写一个程序，从标准输入读取两个数，输出第一个数除以第二个数的结果。用try语句捕获异常，并输出相应提示信息。</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdexcept&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>; <span class="keyword">using</span> <span class="built_in">std</span>::runtime_error;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> num1, num2;</span><br><span class="line">    <span class="keyword">int</span> ans;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; num1 &gt;&gt; num2;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(num2 == <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">throw</span> runtime_error(<span class="string">&quot;Divided by 0!!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        ans = num1 / num2;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; ans &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (runtime_error err)&#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; err.what() &lt;&lt; <span class="string">&quot;\nTry again? Enter y or n .&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">char</span> c;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; c;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">cin</span> || c == <span class="string">&#x27;n&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" class="archive-article-date">
-  	<time datetime="2020-12-01T08:05:18.994Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/01/C++Primer-%E8%AF%AD%E5%8F%A5/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-12-01T08:04:08.615Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/01/hello-world/">Hello World</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/01/hello-world/" class="archive-article-date">
+  	<time datetime="2020-12-01T06:36:34.254Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+        
+          <a class="article-more-a" href="/2020/12/01/hello-world/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/01/hello-world/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E9%87%8D%E8%BD%BD%E8%BF%90%E7%AE%97%E4%B8%8E%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" class="archive-article-date">
-  	<time datetime="2020-12-01T08:02:39.463Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-深度学习炼丹常见操作及问题-持续更新" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/30/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%82%BC%E4%B8%B9%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C%E5%8F%8A%E9%97%AE%E9%A2%98-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/">深度学习炼丹常见操作及问题(持续更新)</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/30/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%82%BC%E4%B8%B9%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C%E5%8F%8A%E9%97%AE%E9%A2%98-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/" class="archive-article-date">
+  	<time datetime="2020-12-01T03:20:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>众所周知，炼丹需要强大的计算资源，通常都是在服务器（集群）上进行炼丹。<br>但是，对于新手来说，Linux命令不熟悉，远程登录软件不会用，python环境不会管理等等，分分钟劝退。曾经的我就是这样一个小小白，跳了许多坑，慢慢摸索着才上了道。<br>所以就写一篇博客，随手记录一下常见的一些操作，会一直更新，免得自己忘记。这些是我个人使用的一些操作或者解决方案，不是放之四海而皆准的，请酌情参考哈！</p>
+        
+          <a class="article-more-a" href="/2020/11/30/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%82%BC%E4%B8%B9%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C%E5%8F%8A%E9%97%AE%E9%A2%98-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/30/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%82%BC%E4%B8%B9%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C%E5%8F%8A%E9%97%AE%E9%A2%98-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/" class="archive-article-date">
-  	<time datetime="2020-12-01T08:01:20.342Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Python调用C-C-程序" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/30/Python%E8%B0%83%E7%94%A8C-C-%E7%A8%8B%E5%BA%8F/">Python调用C/C++程序</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/30/Python%E8%B0%83%E7%94%A8C-C-%E7%A8%8B%E5%BA%8F/" class="archive-article-date">
+  	<time datetime="2020-12-01T03:07:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Python调用C-C-程序的方法"><a href="#Python调用C-C-程序的方法" class="headerlink" title="Python调用C/C++程序的方法"></a>Python调用C/C++程序的方法</h2><p>最近写BUG的时候遇到python计算很慢的情况，于是调研了一波在python中嵌入C++程序的方法，记录一下，便于查询。</p>
+<p>一般来说在python调用C/C++程序主要可以分为3步：</p>
+<ul>
+<li>1、编写C/C++实现程序。</li>
+<li>2、将C/C++程序编译成动态库。</li>
+<li>3、在Python中调用编译生成的库。</li>
+</ul>
+        
+          <a class="article-more-a" href="/2020/11/30/Python%E8%B0%83%E7%94%A8C-C-%E7%A8%8B%E5%BA%8F/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/30/Python%E8%B0%83%E7%94%A8C-C-%E7%A8%8B%E5%BA%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E6%8B%B7%E8%B4%9D%E6%8E%A7%E5%88%B6/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:59:43.813Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:58:25.927Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+        
+        
+    </div>
+</aside>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:57:19.076Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-IO%E5%BA%93/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:55:39.897Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E5%87%BD%E6%95%B0/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:54:34.153Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:53:31.560Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
-  
-
-    
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &amp;raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
     </nav>
   
 
@@ -401,9 +510,9 @@
     <script>
 	var yiliaConfig = {
 		mathjax: true,
-		isHome: false,
+		isHome: true,
 		isPost: false,
-		isArchive: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

@@ -6,13 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives | JimmyTang&#39;Blog</title>
+  <title>JimmyTang&#39;Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="泛型算法一般情况下，算法不直接操作容器，而是遍历由两个迭代器指定的元素范围来进行操作。 123456789int val &#x3D; 42;vector&lt;int&gt; vec &#x3D; &amp;#123;10, 20, 30, 42&amp;#125;;auto result &#x3D; find(vec.cbegin(), vec.cend(), val); &#x2F;&#x2F;find返回指向匹配位置的迭代器，如果找不到，则返回尾后迭代">
+<meta property="og:type" content="article">
 <meta property="og:title" content="JimmyTang&#39;Blog">
-<meta property="og:url" content="http://example.com/archives/index.html">
+<meta property="og:url" content="http://example.com/2020/12/01/C++Primer-%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="JimmyTang&#39;Blog">
+<meta property="og:description" content="泛型算法一般情况下，算法不直接操作容器，而是遍历由两个迭代器指定的元素范围来进行操作。 123456789int val &#x3D; 42;vector&lt;int&gt; vec &#x3D; &amp;#123;10, 20, 30, 42&amp;#125;;auto result &#x3D; find(vec.cbegin(), vec.cend(), val); &#x2F;&#x2F;find返回指向匹配位置的迭代器，如果找不到，则返回尾后迭代">
 <meta property="og:locale">
+<meta property="article:published_time" content="2020-12-01T08:04:08.615Z">
+<meta property="article:modified_time" content="2020-12-01T08:04:08.615Z">
 <meta property="article:author" content="JimmyTang">
 <meta name="twitter:card" content="summary">
   
@@ -150,235 +154,451 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-C++Primer-泛型算法" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="泛型算法"><a href="#泛型算法" class="headerlink" title="泛型算法"></a>泛型算法</h1><p>一般情况下，算法不直接操作容器，而是遍历由两个迭代器指定的元素范围来进行操作。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> val = <span class="number">42</span>;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec = &#123;<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">42</span>&#125;;</span><br><span class="line"><span class="keyword">auto</span> result = find(vec.cbegin(), vec.cend(), val); <span class="comment">//find返回指向匹配位置的迭代器，如果找不到，则返回尾后迭代器。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//对于内置数组也能用泛型算法</span></span><br><span class="line"><span class="keyword">int</span> arr[] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">20</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> val2 = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">int</span>* r = find(begin(arr), end(arr), val2);</span><br><span class="line"><span class="comment">//标准库的begin和end返回指向数组首元素和尾元素之后位置的指针。</span></span><br></pre></td></tr></table></figure>
+<p>@[toc]</p>
+<h3 id="只读算法"><a href="#只读算法" class="headerlink" title="只读算法"></a>只读算法</h3><p>accumulate包含在numeric头文件中，计算指定范围内的和。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec &#123;<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> sum = accumulate(vec.cbegin(), vec.cend(), <span class="number">0</span>);<span class="comment">// 第三个参数的类型决定了使用的加号类型以及返回值的类型。</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;vs&#123;<span class="string">&quot;jack&quot;</span>, <span class="string">&quot;likes&quot;</span>, <span class="string">&quot;rose&quot;</span>&#125;;</span><br><span class="line"><span class="built_in">string</span> s = accumulate(vs.cbegin(), vs.cend(), <span class="built_in">string</span>(<span class="string">&quot;&quot;</span>)); <span class="comment">//正确，因为string定义了+运算符</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> s = accumulate(vs.cbegin(), vs.cend(), <span class="string">&quot;&quot;</span>); <span class="comment">//错误const char*没有定义+运算符</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>操作两个序列的算法</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//roster2的元素至少和roster1中元素一样多</span></span><br><span class="line">equal(roster1.cbegin(), roster1.cend(), roster2); <span class="comment">//两个容器类型可以不一样，元素类型也可以不一样。比如，vector&lt;string&gt;可以和list&lt;const char*&gt;，只要能用==来比较两个元素即可。 </span></span><br></pre></td></tr></table></figure>
+<h3 id="写容器元素的算法"><a href="#写容器元素的算法" class="headerlink" title="写容器元素的算法"></a>写容器元素的算法</h3><p>算法不检查写操作。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;vec;</span><br><span class="line">fill_n(vec.begin(), vec.size(), <span class="number">1</span>); <span class="comment">//所有元素重置为1</span></span><br><span class="line"></span><br><span class="line">fill_n(dest, n, val); <span class="comment">//dest是指向某一元素的迭代器，n是整数，表示从dest开始，至少包含n个元素的这样一个范围。</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意，调用算法往容器中写入超过容量的元素的结果是未定义的！</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fill_n(vec.begin(), <span class="number">10</span>, <span class="number">1</span>); <span class="comment">//错误，试图往空vector写入10个元素</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>back_inserter</strong><br>确保算法有足够空间来容纳元素的方法就是使用插入迭代器。<br>使用插入迭代器赋值时，会将一个与赋值号=右侧相等的元素添加到容器中。<br>back_inserter定义在iterator中。接受一个指向容器的引用，返回一个与该容器绑定的插入迭代器，当通过该迭代器进行赋值时，会调用push_back将指定值添加到容器中。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec;</span><br><span class="line"><span class="keyword">auto</span> it = back_inserter(vec);</span><br><span class="line">*it = <span class="number">42</span>; <span class="comment">//此时vec中有42</span></span><br></pre></td></tr></table></figure>
+<p>还可以使用back_inserter来创建一个迭代器，作为算法的目的位置来使用。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;vec &#123;<span class="number">10</span>, <span class="number">30</span>, <span class="number">28</span>, <span class="number">16</span>&#125;;</span><br><span class="line">fill_n(back_inserter(vec), <span class="number">2</span>, <span class="number">1</span>); <span class="comment">//此时vec=&#123;10, 30, 28, 16, 1, 1&#125; </span></span><br></pre></td></tr></table></figure>
+
+<p><strong>copy算法</strong></p>
+<p>传递给copy的目的序列至少要和输入序列一样大。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[]= &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> a2[<span class="keyword">sizeof</span>(a) / <span class="keyword">sizeof</span>(*a)]; <span class="comment">//a2和a一样大 sizeof(数组名)表示的是数组所占空间</span></span><br><span class="line"><span class="keyword">auto</span> ret = copy(begin(a), end(a), a2); <span class="comment">//copy返回的是目的迭代器递增后的值，此时ret指向a2尾元素之后的位置。</span></span><br></pre></td></tr></table></figure>
+
+<p>有很多算法提供所谓的”拷贝”版本。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">replace(ilst.begin(), ilst.end(), <span class="number">0</span>, <span class="number">42</span>); <span class="comment">//将ilst中等于0的元素替换成42</span></span><br><span class="line"><span class="comment">//其copy版本是</span></span><br><span class="line">replace_copy(ilst.begin(), ilst.end(), back_inserter(vec), <span class="number">0</span>, <span class="number">42</span>); <span class="comment">//调用后ilst并未改变。vec包含ilst的拷贝，只不过等于0的值都被替换成42了。</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>重排容器元素的算法</strong></p>
+<p>例子：消除重复单词。使用unique标准库算法来重排vector</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">elimDups</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp;words)</span></span>&#123;</span><br><span class="line">    sort(words.begin(), words.end());</span><br><span class="line">    <span class="comment">//unique重排输入范围，使得每个单词只出现一次，排列在容器前部，返回指向不重复区域开始的迭代器。</span></span><br><span class="line">    <span class="keyword">auto</span> end_unique = unique(words.begin(), words.end());</span><br><span class="line">    <span class="comment">//删除后面的元素。因为算法不对容器进行操作，所以要调用容器erase操作进行删除</span></span><br><span class="line">    words.erase(end_unique, words.end());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="定制操作"><a href="#定制操作" class="headerlink" title="定制操作"></a>定制操作</h2><h3 id="谓词"><a href="#谓词" class="headerlink" title="谓词"></a>谓词</h3><p>谓词是一个可调用的表达式，分为一元谓词(unary predicate)和二元谓词(binary predicate)。<br>接受谓词的算法对输入序列中的元素调用谓词，因此元素类型必须能够转换为谓词的参数类型。可以将一个谓词传递给一个算法，使之按照谓词的操作来管理输入序列。<br>例如将sort按照字符串的长度来进行排列：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isShorter</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp; s1, <span class="keyword">const</span> <span class="built_in">string</span>&amp; s2)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> s1.size() &lt; s2.size();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//按长度由短到长排序</span></span><br><span class="line"></span><br><span class="line">sort(words.begin(), words.end(), isShorter);</span><br></pre></td></tr></table></figure>
+<p>对于这个问题，如果我们希望相等长度的字符串的位置关系不变，即长度相等的在前面的字符串排序后依旧排在前面，那就需要用到stable_sort()算法。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">elimDups(words); <span class="comment">//按字典序排序，且去除重复单词</span></span><br><span class="line">stable_sort(words.begin(), words.end(), isShorter); <span class="comment">//该排序算法是稳定的</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="lambda表达式"><a href="#lambda表达式" class="headerlink" title="lambda表达式"></a>lambda表达式</h3><p>一般有四种可调用对象：</p>
+<ol>
+<li>函数。</li>
+<li>函数指针。</li>
+<li>重载了函数调用运算符的类。</li>
+<li>lambda表达式。</li>
+</ol>
+<p>lambda表达式具有一个返回类型、一个参数列表和一个函数体。<br>一般形式如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[capture <span class="built_in">list</span>] (prameter <span class="built_in">list</span>) -&gt; <span class="keyword">return</span> type &#123;function body&#125;</span><br></pre></td></tr></table></figure>
+<p>其中[capture list]是一个lambda所在函数中定义的局部变量的列表（通常为空）。<br>与普通函数不同的是，lambda表达式必须使用尾置返回。此外lambda的形参不能有默认参数。<br>可以忽略参数列表和返回类型，但必须包含捕获列表和函数体。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> f = [] &#123;<span class="keyword">return</span> <span class="number">42</span>;&#125;;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; f() &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//与普通函数调用方式相同</span></span><br></pre></td></tr></table></figure>
+<p>使用lambda表达式来在vector中寻找第一个大于等于给定长度的元素。find_if()接受一对迭代器表示一个范围，第三个参数接受一个一元谓词，所以无法使用两个参数的isShorter来比较字符串是否大于某一长度。此时需要用到lambda表达式。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">biggies</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; words, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;::size_type sz)</span></span>&#123;</span><br><span class="line">    elimDups(words.begin(); <span class="comment">//将words按照字典序排序，去除重复元素</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//调用lambda表达式,返回指向第一个长度不小于sz的元素位置的迭代器</span></span><br><span class="line">    <span class="keyword">auto</span> wc = find_if(words.begin(), words.end(), [sz](<span class="keyword">const</span> <span class="built_in">string</span>&amp; a)&#123;<span class="keyword">return</span> a.size() &gt;= sz;&#125;);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>for_each算法</strong></p>
+<p>for_each接受一个可调用对象，并对输入序列中每一个元素调用此对象。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">biggies</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; words, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;::size_type sz)</span></span>&#123;</span><br><span class="line">    elimDups(words.begin(); <span class="comment">//将words按照字典序排序，去除重复元素</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//调用lambda表达式,返回指向第一个长度不小于sz的元素位置的迭代器</span></span><br><span class="line">    <span class="keyword">auto</span> wc = find_if(words.begin(), words.end(), [sz](<span class="keyword">const</span> <span class="built_in">string</span>&amp; a)&#123;<span class="keyword">return</span> a.size() &gt;= sz;&#125;);</span><br><span class="line">    <span class="comment">//打印长度大于sz的每一个元素，因为words经过排序，所以迭代器wc后面的元素长度都大于等于sz</span></span><br><span class="line">    for_each(wc, words.end(), [](<span class="keyword">const</span> <span class="built_in">string</span>&amp; s)&#123;<span class="built_in">cout</span> &lt;&lt; s &lt;&lt; <span class="string">&quot;&quot;</span>;&#125;);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>捕获列表为空，是因为只对lambda所在的函数中定义的非static变量使用列表，cout不是在biggies函数中定义的名字，只要biggies出现的作用域包含了cout，我们就可以使用cout。</p>
+<p><font color=red>lambda捕获列表只作用于局部非static变量，可以直接使用局部static变量和所在函数之外声明的变量。</font></p>
+<p><strong>值捕获</strong></p>
+<p>值捕获的前提是变量可以拷贝。在lambda创建时拷贝而不是调用时。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">size_t</span> v1 = <span class="number">42</span>;</span><br><span class="line">    <span class="keyword">auto</span> f = [v1]&#123;<span class="keyword">return</span> v1&#125;;</span><br><span class="line">    v1 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">auto</span> j = f(); <span class="comment">//j=42,因为创建lambda时进行了拷贝。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>引用捕获</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">size_t</span> v1 = <span class="number">42</span>;</span><br><span class="line">    <span class="keyword">auto</span> f = [&amp;v1]&#123;<span class="keyword">return</span> v1&#125;; <span class="comment">//创建lambda</span></span><br><span class="line">    v1 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">auto</span> j = f(); <span class="comment">//执行lambda。此时j = 0，因为lambda返回的是v1所指向的对象的值。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>有些情况下参数是不能拷贝的，只能捕获引用，例如ostream、istream对象。以引用方式捕获一个变量时，必须保证lambda执行时该变量是存在的。</p>
+<p><strong>隐式捕获</strong></p>
+<p>可以在捕获列表中写=来表示值捕获，写&amp;来表示进行引用捕获。这样可以让编译器根据lambda体中的代码来推断使用的是哪些变量。<br>此外还可以混合使用显式捕获和隐式捕获,第一个元素必须是隐式捕获(=或者&amp;)。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">biggies</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; &amp;words, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;::size_type sz, ostream&amp; os = <span class="built_in">cout</span>, <span class="keyword">char</span> c = <span class="string">&#x27; &#x27;</span>)</span></span>&#123;</span><br><span class="line">    <span class="comment">//os隐式引用捕获，c显式值捕获</span></span><br><span class="line">    for_each(words.begin(), words.end(), [&amp;, c] (<span class="keyword">const</span> <span class="built_in">string</span> &amp;s)&#123;os &lt;&lt; s &lt;&lt; c;&#125;);</span><br><span class="line">    <span class="comment">//os显式引用捕获，c隐式值捕获</span></span><br><span class="line">    for_each(words.begin(), words.end(), [=, &amp;os] (<span class="keyword">const</span> <span class="built_in">string</span> &amp;s)&#123;os &lt;&lt; s &lt;&lt; c;&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>可变lambda</strong></p>
+<p>一般情况下，对于值被拷贝的变量，lambda不会改变其值。若希望改变一个被捕获变量的值，需在参数列表首加上mutable。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">size_t</span> v1 = <span class="number">42</span>;</span><br><span class="line">    <span class="keyword">auto</span> f = [v1] () <span class="keyword">mutable</span> &#123;<span class="keyword">return</span> ++v1;&#125;;</span><br><span class="line">    v1 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">auto</span> j = f(); <span class="comment">//此时j=43</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果是引用捕获的变量，能否修改依赖于此引用指向的是const类型对象还是非const类型的对象。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f2</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">size_t</span> v1 = <span class="number">42</span>;</span><br><span class="line">    <span class="keyword">auto</span> f = [&amp;v1] &#123;<span class="keyword">return</span> ++v1;&#125;;</span><br><span class="line">    v1 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">auto</span> j = f(); <span class="comment">//此时j=1，是0前置自增之后的返回值。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>指定lambda返回类型</strong></p>
+<p>如果一个lambda体包含return之外的任意语句，则编译器假定其返回void。若要返回指定类型，则需要使用尾置返回类型。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vi = &#123;<span class="number">1</span>, <span class="number">-1</span>, <span class="number">2</span>, <span class="number">-2</span>&#125;;</span><br><span class="line">transform(vi.begin(), vi.end(), vi.begin(), </span><br><span class="line">            [](<span class="keyword">int</span> i) -&gt; <span class="keyword">int</span> &#123;<span class="keyword">if</span> (i &lt; <span class="number">0</span>) <span class="keyword">return</span> -i; <span class="keyword">else</span> <span class="keyword">return</span> i;&#125;); <span class="comment">//使用尾置返回来指定返回类型</span></span><br></pre></td></tr></table></figure>
+<p>标准库函数transform接收3个迭代器和一个可调用对象。前两个迭代器表述输入范围，都三个表示目位置，算法对每个输入元素调用可调用对象。</p>
+<p><strong>参数绑定</strong></p>
+<p>一般情况下，可以用函数来代替lambda表达式。但是，对于捕获局部变量的lambda表达式，想用函数来替换就不是那么容易了。比如find_if算法只能接受一个一元谓词，而比较字符串长度的化需要传入字符串以及需要比较的长度，这样用函数来就完成不了，需要用lambda表达式来捕获一个局部变量来形成一个一元谓词。<br>比如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">check_size</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp; s, <span class="built_in">string</span>::size_type sz)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> s.size() &gt; sz;</span><br><span class="line">&#125; <span class="comment">//这个函数接受两个参数，所以不能用于find_if</span></span><br></pre></td></tr></table></figure>
+<p>要使find_if能够实现返回大于给定长度的字符串的功能，一个方法是使用lambda表达式，另一个方法就是使用bind()函数进行参数绑定。<br>标准库bind函数定义在functional头文件中。它接受一个可调用对象，生成一个新的可调用对象。</p>
+<p>一般的调用形式为：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> newCallable = bind(callable, arg_list);</span><br></pre></td></tr></table></figure>
+<p>arg_list中的参数可能包含形如_n的占位符，表示newCallable的参数，例如_1为newCallable的第一个参数，_2为newCallable的第二个参数。</p>
+<p><strong>绑定check_size的sz参数</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//check6是一个可调用对象，接受一个string参数</span></span><br><span class="line"><span class="comment">//并用此string和6来调用check_size函数。</span></span><br><span class="line"><span class="keyword">auto</span> check6 = bind(check_size, _1, <span class="number">6</span>);</span><br><span class="line"><span class="comment">//占位符_1出现在参数列表的第一个位置，说明check6的第一个参数对应check_size的第一个参数，类型应该为string类型。</span></span><br></pre></td></tr></table></figure>
+<p>使用bind可以将原来使用的基于lambda的版本转换成bind的版本：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> wc = find_if(words.begin(), words.end(), [sz](<span class="keyword">const</span> <span class="built_in">string</span>&amp; a)&#123;<span class="keyword">return</span> a.size() &gt; sz;&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//转换成</span></span><br><span class="line"><span class="keyword">auto</span> wc = find_if(words.begin(), words.end(), bind(check_size, _1, sz)); <span class="comment">//check_size定义如上</span></span><br></pre></td></tr></table></figure>
+<p>其中占位符_，1、_2等定义在placeholders的命名空间中，使用前需声明：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::placeholders::_1;</span><br></pre></td></tr></table></figure>
+<p><strong>绑定引用参数</strong><br>一般情况下，bind的那些不是占位符的参数被拷贝到bind返回的可调用对象中。如果希望传递给bind一个对象而又不拷贝它，就必须调用标准库的ref函数。ref返回一个对象，包含给定的引用，此对象可以拷贝。同理还有cref，都定义在头文件functional中。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ostream&amp; <span class="title">print</span><span class="params">(ostream&amp; os, <span class="keyword">const</span> <span class="built_in">string</span>&amp; s, <span class="keyword">char</span> c)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> os &lt;&lt; s &lt;&lt; c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">for_each(words.begin(), words.end(), bind(print, ref(os), _1, <span class="string">&#x27; &#x27;</span>));</span><br></pre></td></tr></table></figure>
+<h3 id="再探迭代器"><a href="#再探迭代器" class="headerlink" title="再探迭代器"></a>再探迭代器</h3><p>iterator中定义了以下四类迭代器。</p>
+<ol>
+<li>插入迭代器， 绑定到一个容器上，用来向容器插入元素。</li>
+<li>流迭代器， 绑定到输入输出流上，用来遍历关联的IO流。</li>
+<li>反向迭代器，除了forward_list之外标准库容器都有反向迭代器。</li>
+<li>移动迭代器，不是用来拷贝其中元素，而是移动元素。</li>
+</ol>
+<p><strong>插入迭代器</strong></p>
+<p>有3种类型：</p>
+<ol>
+<li>back_inserter 创建一个使用push_back的迭代器。</li>
+<li>front_inserter 创建一个使用push_front的迭代器。</li>
+<li>inserter 创建一个使用insert的迭代器。此函数接受第二个参数，是指向给定容器的迭代器，元素被插入到<font color=blue>给定迭代器所表示的元素之前。</font></li>
+</ol>
+<p>使用inserter(c, iter)时得到一个迭代器，使用它时会将元素插入到iter原来所指向的元素之前的位置。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> it = inserter(c, iter); <span class="comment">//获取一个插入迭代器it</span></span><br><span class="line">*it = <span class="number">1</span>; </span><br><span class="line"><span class="comment">//效果等价于</span></span><br><span class="line">it = c.insert(it, <span class="number">1</span>);</span><br><span class="line">++it;</span><br></pre></td></tr></table></figure>
+<p>front_inseerter 元素总是插入到第一个元素之前。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt; lst = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br><span class="line"><span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt; lst2, lst3;</span><br><span class="line"><span class="comment">//拷贝完成之后，lst2包含4 3 2 1</span></span><br><span class="line">copy(lst.cbegin(), lst.cend(), front_inserter(lst2));</span><br><span class="line"><span class="comment">//拷贝完成之后， lst3包含1 2 3 4</span></span><br><span class="line">copy(lst.cbegin(), lst.cend(), inserter(lst3, lst3.begin()));</span><br></pre></td></tr></table></figure>
+
+<p><strong>iostream迭代器</strong></p>
+<p><font color=blue>istream_iterator</font> 读取输入流。<br><font color=blue>ostream_iterator</font> 向一个输出流写数据。<br>istream_iterator操作<br>istream_iterator读取的类型必须定义了输入运算符&gt;&gt;。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">istream_iterator&lt;<span class="keyword">int</span>&gt; <span class="title">int_it</span><span class="params">(<span class="built_in">cin</span>)</span></span>; <span class="comment">//初始化一个迭代器int_it，绑定到cin</span></span><br><span class="line">istream_iterator&lt;<span class="keyword">int</span>&gt; int_eof; <span class="comment">//默认初始化，创建了一个尾后迭代器</span></span><br><span class="line"><span class="function">ifstream <span class="title">in</span><span class="params">(<span class="string">&quot;a.txt&quot;</span>)</span></span>;</span><br><span class="line"><span class="function">istream_iterator&lt;<span class="built_in">string</span>&gt; <span class="title">str_it</span><span class="params">(in)</span></span>; <span class="comment">//将输入流迭代器关联到文件输入流对象</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//istream_iterator从标准输入读取数据，存入vector中</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec;</span><br><span class="line"><span class="function">istream_iterator&lt;<span class="keyword">int</span>&gt; <span class="title">in_iter</span><span class="params">(<span class="built_in">cin</span>)</span></span>;</span><br><span class="line">istream_iterator&lt;<span class="keyword">int</span>&gt; int_eof; <span class="comment">//istream_iterator尾后迭代器</span></span><br><span class="line"><span class="keyword">while</span>(in_iter != int_eof)&#123;</span><br><span class="line">    vec.push_back(*in_iter++); <span class="comment">//后置自增运算符优先级高于解引用运算符。后置自增运算符&gt;前置自增运算符&gt;解引用运算符。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面写法等价于：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">istream_iterator&lt;int&gt; in_iter(cin), eof;</span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">vec</span><span class="params">(in_iter, eof)</span></span>; <span class="comment">//从迭代器范围构造vector</span></span><br></pre></td></tr></table></figure>
+<p>vector构造函数从cin中读取数据，直到遇到文件尾或者第一个不是int的数据为止。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>istream_iterator操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>istream_iterator<T> in(istream);</td>
+<td>in从输入流读取类型为T的值</td>
+</tr>
+<tr>
+<td>istream_iterator<T> end;</td>
+<td>读取类型为T的值的istream_iterator迭代器，表示尾后位置。</td>
+</tr>
+<tr>
+<td>in1 == in2; in1 != in2</td>
+<td>in1和in2必须读取相同类型。如果都是尾后迭代器，或者绑定到相同的输入，则两者相等。</td>
+</tr>
+<tr>
+<td>*in</td>
+<td>返回从流中读取的值。</td>
+</tr>
+<tr>
+<td>++in、in++</td>
+<td>使用元素类型所定义的&gt;&gt;运算符从输入流中读取下一值。前置版本返回一个指向递增后迭代器的引用，后置版本返回旧值(一个临时对象，只能用作右值)。</td>
+</tr>
+</tbody></table>
+<p><strong>ostream_iterator操作</strong></p>
+<p>可以对任何定义有输出运算符&lt;&lt;的类型定义ostream_iterator。必须将ostream_iterator绑定到一个指定的流，<font color=red>不允许空的或表示尾后迭代器的ostream_iterator。</font></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>ostream_iterator操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ostream_iterator<T> out(os);</td>
+<td>out将类型为T的值写到输出流os。</td>
+</tr>
+<tr>
+<td>ostream_iterator<T> out(os, d);</td>
+<td>out将类型为T的值写到输出流中，每个值后面都输出一个d。d指向一个以空字符结尾的字符数组。</td>
+</tr>
+<tr>
+<td>out = val;</td>
+<td>用&lt;&lt;运算符将val写到out所绑定的ostream对象中。val的类型必须与out可写的类型兼容。</td>
+</tr>
+<tr>
+<td>*out , ++out, out++</td>
+<td>这些运算存在，但不对out做任何事情，每个运算符都返回out</td>
+</tr>
+</tbody></table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ostream_iterator&lt;<span class="keyword">int</span>&gt; <span class="title">out_iter</span><span class="params">(<span class="built_in">cout</span>, <span class="string">&quot; &quot;</span>)</span></span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> e: vec)&#123;</span><br><span class="line">    *out++ = e; <span class="comment">//将元素e写到cout</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//其实向out_iter赋值时，可以忽略*和++</span></span><br><span class="line"><span class="comment">//等价于</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> e : vec)&#123;</span><br><span class="line">    out_iter = e;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>使用流迭代器处理类类型</strong></p>
+<p>只要类类型定义有&lt;&lt;，我们就可以为其定义ostream_iterator对象。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Sales_item类定义有&lt;&lt;, &gt;&gt;</span></span><br><span class="line">istream_iterator&lt;Sales_item&gt; item_iter(cin), eof;</span><br><span class="line"><span class="function">ostream_iterator&lt;Sales_item&gt; <span class="title">out_iter</span><span class="params">(<span class="built_in">cout</span>, <span class="string">&quot;\n&quot;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">Sales_item sum = *item_iter++;</span><br><span class="line"><span class="keyword">while</span>(item_iter != eof)&#123;</span><br><span class="line">    <span class="comment">//如果当前交易记录中有着相同的ISBN号</span></span><br><span class="line">    <span class="keyword">if</span>(item_iter-&gt;isbn() == sum.isbn())</span><br><span class="line">        sum += *item_iter++; <span class="comment">//将其加到sum中，并读取下一记录</span></span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        out_iter = sum; <span class="comment">//输出当前值</span></span><br><span class="line">        sum = *iyem_iter++; <span class="comment">//读取下一记录</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">out_iter = sum; <span class="comment">//打印最后一组记录的和</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>反向迭代器</strong></p>
+<p>除了forward_list外，其他容器都支持反向迭代器。<font color=red>反向迭代器rbegin指向的是容器最后一个元素, rend指向容器首元素的前面一个位置。</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> iter = vec.rbegin(); iter != vec.rend(); ++iter)&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; *iter;  <span class="comment">//输出内容是4，3，2，1，1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>反向迭代器支持自增、自减运算符。但是，流迭代器不支持递减运算。<br>一个例子：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//输出line的最后一个逗号后面的单词</span></span><br><span class="line"><span class="built_in">string</span> line = &#123;<span class="string">&quot;FIRST,MIDDLE,LAST&quot;</span>&#125;;</span><br><span class="line"><span class="keyword">auto</span> rcomma = find(line.crbegin(), line.crend(), <span class="string">&#x27;,&#x27;</span>); <span class="comment">//返回指向最后一个逗号的反向迭代器</span></span><br><span class="line"><span class="comment">//输出的将是逆序的字符串TSAL，而我们想要的是LAST</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="built_in">string</span>(line.crbegin(), rcomma) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//利用反向迭代器的base成员将反向迭代器转换成普通迭代器</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="built_in">string</span>(rcomma.base(), line.cend()) &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+<p>rcomma指向最后一个逗号，而rcomma.base()指向最后一个逗号的后一个位置，要注意区分两者位置关系。</p>
+<h3 id="泛型算法结构"><a href="#泛型算法结构" class="headerlink" title="泛型算法结构"></a>泛型算法结构</h3><p>对于算法要求的迭代器操作可以分为5个类别。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>迭代器类别</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>输入迭代器</td>
+<td>只读不写，单遍扫描，只能递增</td>
+</tr>
+<tr>
+<td>输出迭代器</td>
+<td>只写不读，单遍扫描，只能递增</td>
+</tr>
+<tr>
+<td>前向迭代器</td>
+<td>可读写，多遍扫描，只能递增</td>
+</tr>
+<tr>
+<td>双向迭代器</td>
+<td>可读写，多遍扫描，可递增递减</td>
+</tr>
+<tr>
+<td>随机访问迭代器</td>
+<td>可读写，多遍扫描，支持全部迭代器运算</td>
+</tr>
+<tr>
+<td>除输出迭代器之外，高层类别的迭代器支持底层类别的迭代器的所有操作。</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><strong>算法形参模式</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">alg(beg, end, other args)</span><br><span class="line">alg(beg, end, dest, other args)</span><br><span class="line">alg(beg, end, beg2, other args)</span><br><span class="line">alg(beg, end, beg2, end2, other args)</span><br></pre></td></tr></table></figure>
+<p>单独接受beg2的算法将beg2作为第二个输入范围中的首元素，所以第二个输入范围的大小至少和第一个输入范围大小一样。</p>
+<p>一般来说，写到额外空间的算法的名字后面都有一个_copy。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v2;</span><br><span class="line">reverse(v.begin(), v.end()); </span><br><span class="line">reverse_copy(v.begin(), v.end(), back_inserter(v2));</span><br><span class="line"></span><br><span class="line">remove_if(v.begin(), v.end(), [] (<span class="keyword">int</span> i) &#123; <span class="keyword">return</span> i % <span class="number">2</span>;&#125;); <span class="comment">//删除奇数元素</span></span><br><span class="line">remove_copy_if(v.begin(), v.end(), back_inserter(v2), [] (<span class="keyword">int</span> i) &#123;<span class="keyword">return</span> i % <span class="number">2</span>;&#125;);  <span class="comment">//将偶数元素拷贝到v2</span></span><br></pre></td></tr></table></figure>
+<h3 id="特定容器算法"><a href="#特定容器算法" class="headerlink" title="特定容器算法"></a>特定容器算法</h3><p>通用版本的sort算法要求使用随机访问迭代器，所以不能用于list和forward_list。list提供双向迭代器，forward_list提供前向迭代器。<br><font color=red>对于链表类容器，应当优先使用成员函数版本的算法而不是通用算法。</font>因为链表成员函数算法通过改变链表元素间的连接来间接交换元素，而不是真正地交换元素位置，效率要高很多。</p>
+<table>
+<thead>
+<tr>
+<th>list和forward_list成员函数版本的算法</th>
+<th>这些操作返回值都是void</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>lst.merge(lst2)</td>
+<td>将来自lst2的元素合并到lst中，lst和lst2都必须是有序的</td>
+</tr>
+<tr>
+<td>lst.merge(lst2, comp)</td>
+<td>元素将从lst2中删除。第一个版本使用 &lt; 运算符，第二个版本使用给定的比较操作。</td>
+</tr>
+<tr>
+<td>lst.remove(val)</td>
+<td>调用erase删除掉与给定值相等的==的每个元素</td>
+</tr>
+<tr>
+<td>lst.remove_if(pred)</td>
+<td>调用erase删除掉令一元谓词为真的每个元素</td>
+</tr>
+<tr>
+<td>lst.reverse()</td>
+<td>反转lst中元素的顺序</td>
+</tr>
+<tr>
+<td>lst.sort()</td>
+<td>用&lt; 排序元素</td>
+</tr>
+<tr>
+<td>lst.sort(comp)</td>
+<td>使用给定比较操作排序元素</td>
+</tr>
+<tr>
+<td>lst.unique()</td>
+<td>调用erase删除同一个值的连续拷贝</td>
+</tr>
+<tr>
+<td>lst.unique()</td>
+<td>调用erase删除使给定二元谓词为真的元素</td>
+</tr>
+<tr>
+<td></td>
+<td>list和forward_list的splice成员函数</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>lst.splice(args)或者flst.splice(args)</td>
+<td></td>
+</tr>
+<tr>
+<td>(p, lst2)</td>
+<td>p是指向lst中元素的迭代器，或者flst的首前位置的迭代器。函数将lst2所有元素移动到lst中p之前的位置，或者是flst中p之后的位置，并将lst2元素删除。lst2必须与lst类型相同且不能是同一个链表。</td>
+</tr>
+<tr>
+<td>(p, lst2, p2)</td>
+<td>p2是指向lst2中的有效迭代器，将p2指向的元素移动到lst中，或者将p2之后的元素移动到flst中。</td>
+</tr>
+<tr>
+<td>(p, lst2, b, e)</td>
+<td>b,e必须是lst2的有效范围将给定范围的元素移动到lst或者flst。其中lst和lst2可以是相同的链表，但p不能在给定范围中。</td>
+</tr>
+</tbody></table>
+<p>fighting!!!</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" class="archive-article-date">
-  	<time datetime="2020-12-01T08:05:18.994Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/12/01/C++Primer-%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-12-01T08:04:08.615Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E9%87%8D%E8%BD%BD%E8%BF%90%E7%AE%97%E4%B8%8E%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" class="archive-article-date">
-  	<time datetime="2020-12-01T08:02:39.463Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+<nav id="article-nav">
+  
+    <a href="/2020/12/01/C++Primer-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/12/01/C++Primer-%E9%87%8D%E8%BD%BD%E8%BF%90%E7%AE%97%E4%B8%8E%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/" class="archive-article-date">
-  	<time datetime="2020-12-01T08:01:20.342Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E6%8B%B7%E8%B4%9D%E6%8E%A7%E5%88%B6/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:59:43.813Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+        
+        
+    </div>
+</aside>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:58:25.927Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:57:19.076Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-IO%E5%BA%93/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:55:39.897Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E5%87%BD%E6%95%B0/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:54:34.153Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:53:31.560Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &amp;raquo;</a>
-    </nav>
+  
+
+  
+    <section id="comments">
+      <div id="disqus_thread"></div>
+        <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'true'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </section>
+  
+
   
 
 
@@ -402,8 +622,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

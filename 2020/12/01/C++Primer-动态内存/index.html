@@ -6,15 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives | JimmyTang&#39;Blog</title>
+  <title>JimmyTang&#39;Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="动态内存C++内存分配模型静态(全局)内存：存储局部static对象、类static数据成员、定义在任何函数之外的对象。static对象在使用之前分配内存，程序结束时销毁。  内存在程序编译的时候已经分配好，运行期间都存在。  栈内存：存储定义在函数内的非static对象（局部非静态变量）。仅在定义的函数块运行时才存在。  栈内存分配运算内置于指令集，效率高，但是容量有限。  **堆内存(自由空间">
+<meta property="og:type" content="article">
 <meta property="og:title" content="JimmyTang&#39;Blog">
-<meta property="og:url" content="http://example.com/archives/index.html">
+<meta property="og:url" content="http://example.com/2020/12/01/C++Primer-%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/index.html">
 <meta property="og:site_name" content="JimmyTang&#39;Blog">
+<meta property="og:description" content="动态内存C++内存分配模型静态(全局)内存：存储局部static对象、类static数据成员、定义在任何函数之外的对象。static对象在使用之前分配内存，程序结束时销毁。  内存在程序编译的时候已经分配好，运行期间都存在。  栈内存：存储定义在函数内的非static对象（局部非静态变量）。仅在定义的函数块运行时才存在。  栈内存分配运算内置于指令集，效率高，但是容量有限。  **堆内存(自由空间">
 <meta property="og:locale">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2020061722333879.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MDMxMzk0MA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="article:published_time" content="2020-12-01T08:01:20.342Z">
+<meta property="article:modified_time" content="2020-12-01T08:01:20.342Z">
 <meta property="article:author" content="JimmyTang">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/2020061722333879.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MDMxMzk0MA==,size_16,color_FFFFFF,t_70#pic_center">
   
     <link rel="alternative" href="/atom.xml" title="JimmyTang&#39;Blog" type="application/atom+xml">
   
@@ -150,235 +156,394 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-C++Primer-动态内存" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="动态内存"><a href="#动态内存" class="headerlink" title="动态内存"></a>动态内存</h1><h2 id="C-内存分配模型"><a href="#C-内存分配模型" class="headerlink" title="C++内存分配模型"></a>C++内存分配模型</h2><p><strong>静态(全局)内存</strong>：存储局部static对象、类static数据成员、定义在任何函数之外的对象。static对象在使用之前分配内存，程序结束时销毁。</p>
+<blockquote>
+<p>内存在程序编译的时候已经分配好，运行期间都存在。</p>
+</blockquote>
+<p><strong>栈内存</strong>：存储定义在函数内的非static对象（局部非静态变量）。仅在定义的函数块运行时才存在。</p>
+<blockquote>
+<p>栈内存分配运算内置于指令集，效率高，但是容量有限。</p>
+</blockquote>
+<p>**堆内存(自由空间)**：程序运行时分配的对象，声明周期由程序来控制。</p>
+<blockquote>
+<p>动态内存分配。</p>
+</blockquote>
+<p><strong>常量区</strong>：存放常量字符串，程序结束时由系统释放。</p>
+<p><strong>代码区</strong>：存放函数体(类成员函数和全局区)的2进制代码。</p>
+<p><img src="https://img-blog.csdnimg.cn/2020061722333879.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MDMxMzk0MA==,size_16,color_FFFFFF,t_70#pic_center" alt="https://blog.csdn.net/cherrydreamsover/article/details/81627855"></p>
+<h3 id="静态全局变量、全局变量、静态局部变量、局部变量的区别"><a href="#静态全局变量、全局变量、静态局部变量、局部变量的区别" class="headerlink" title="静态全局变量、全局变量、静态局部变量、局部变量的区别"></a>静态全局变量、全局变量、静态局部变量、局部变量的区别</h3><p><font color=red>静态全局变量、全局变量区别</font></p>
+<ol>
+<li>静态全局变量和全局变量都属于全局区(静态区)。</li>
+<li>静态全局变量只在本文件中有效，而全局变量在其他文件中可以调用。也就是说在其他文件定义相同的全局变量名会出错。</li>
+</ol>
+<p><font color=red>静态局部变量、局部变量区别</font></p>
+<ol>
+<li>静态局部变量属于静态区，局部变量属于栈区。</li>
+<li>静态局部变量在函数调用结束后不会被销毁，直到程序结束才销毁，别的函数无法调用该变量。</li>
+<li>静态局部变量若没有初始化，则会被默认初始化为0，局部变量则会被随机初始化。</li>
+<li>静态局部变量在编译期间只赋值一次，此后每次函数调用时，调用上次函数结束时的值。而局部变量每调用一次，赋值一次。<h2 id="直接管理内存"><a href="#直接管理内存" class="headerlink" title="直接管理内存"></a>直接管理内存</h2>直接使用new/delete的类不能使用类对象的拷贝、赋值和销毁的默认形式。<br>new分配的内存是无名的。<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *p = <span class="keyword">new</span> <span class="keyword">int</span>;</span><br></pre></td></tr></table></figure>
+默认情况下，动态分配的对象是<strong>默认初始化</strong>的，也就是内置类型的值是未定义的，类类型的对象将使用默认构造函数构造。<br>也可以通过在类型名后面加上空括号来使用<strong>值初始化</strong>。<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *p = <span class="keyword">new</span> <span class="keyword">int</span>(); <span class="comment">//值初始化，*p=0</span></span><br></pre></td></tr></table></figure>
+可以使用auto来推导类型<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">obj</span><span class="params">(<span class="string">&quot;hi&quot;</span>)</span></span>;</span><br><span class="line"><span class="keyword">auto</span> p = <span class="keyword">new</span> <span class="keyword">auto</span>(obj); <span class="comment">//此时p为string*</span></span><br><span class="line"><span class="keyword">auto</span> p = <span class="keyword">new</span> <span class="keyword">auto</span>&#123;a, b, c&#125;; <span class="comment">//错误，只能由单个初始化器</span></span><br></pre></td></tr></table></figure>
+定位new<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *p = <span class="keyword">new</span> <span class="keyword">int</span>; <span class="comment">//如果分配失败，抛出std::bad_alloc异常</span></span><br><span class="line"><span class="keyword">int</span> *p2 = <span class="keyword">new</span> (nothrow) <span class="keyword">int</span>; <span class="comment">//定位new,如果分配失败，返回空指针,bad_alloc和nothrow定义在头文件new中</span></span><br></pre></td></tr></table></figure>
+关于数组<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>* p = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>](); <span class="comment">//10个值初始化的int</span></span><br><span class="line"><span class="keyword">delete</span> [] p;</span><br></pre></td></tr></table></figure>
+delete之后指针变成了悬空指针，在<font color=red>delete之后置为nullptr。</font></li>
+</ol>
+<h3 id="malloc-new、free-delete的区别"><a href="#malloc-new、free-delete的区别" class="headerlink" title="malloc/new、free/delete的区别"></a>malloc/new、free/delete的区别</h3><ol>
+<li>new操作符在自由存储区为对象动态分配空间，malloc函数从堆区动态分配空间。关于自由存储区，可以是堆区，也可以是静态存储区，取决于operator new在哪里为对象分配内存。</li>
+<li>new操作符分配内存成功后返回对象类型的指针，而malloc返回的是void*指针，需要强制转换成所需类型。分配类型失败时，new会返回bad_alloc异常，malloc返回NULL</li>
+<li>malloc/free需要手动计算类型大小，而new/delete不需要。</li>
+<li>malloc/free只是动态分配和释放空间，而new/delete还会调用构造函数和析构函数进行初始化和清理。</li>
+</ol>
+<h2 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h2><p>shared_ptr:允许多个指针同时指向同一个对象。<br>unique_ptr:只允许一个指针指向某一对象。<br>weak_ptr:弱引用，指向shared_ptr所管理的对象。<br>都定义在memory头文件中。</p>
+<h3 id="shared-ptr"><a href="#shared-ptr" class="headerlink" title="shared_ptr"></a>shared_ptr</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>shared_ptr特有操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>make_shared<T> (args)</td>
+<td>返回一个shared_ptr，指向一个动态分配的类型为T的对象，使用args初始化此对象。</td>
+</tr>
+<tr>
+<td>shared_ptr<T>p (q)</td>
+<td>p是shared_ptr q的拷贝：此操作会递增q中的计数器，q中的指针必须能转换成T*</td>
+</tr>
+<tr>
+<td>p = q</td>
+<td>shared_ptr所保存的指针必须能互相转换，此操作会递减p的引用计数，递增q的引用计数，若p的引用计数变为了0，则释放其管理的原来的内存。</td>
+</tr>
+<tr>
+<td>p.use_count()</td>
+<td>返回与p共享对象的智能指针个数，可能会很慢。</td>
+</tr>
+<tr>
+<td>p.unique()</td>
+<td>若p.use_count()为1返回true，否则返回false</td>
+</tr>
+</tbody></table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; p1 = make_shared&lt;<span class="keyword">int</span>&gt; (<span class="number">42</span>); <span class="comment">//创建一个指向442的shared_ptr</span></span><br><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="built_in">string</span>&gt; p2 = make_shared&lt;<span class="built_in">string</span>&gt;(<span class="number">10</span>, <span class="string">&#x27;o&#x27;</span>);</span><br><span class="line"><span class="keyword">auto</span> p3 = make_shared&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt;();</span><br><span class="line"><span class="function"><span class="keyword">auto</span> <span class="title">p4</span><span class="params">(p3)</span></span>; <span class="comment">//p3p4指向相同对象</span></span><br></pre></td></tr></table></figure>
+<p>可以使用make_shared标准库函数来创建一个shared_ptr。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="built_in">string</span>&gt;sp = make_shared&lt;<span class="built_in">string</span>&gt;(<span class="number">10</span>, <span class="string">&#x27;c&#x27;</span>); <span class="comment">//sp指向一个值为cccccccccc的string</span></span><br><span class="line"><span class="comment">//sp2指向一个值初始化的int，即值为0</span></span><br><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt;sp2 = make_shared&lt;<span class="keyword">int</span>&gt;();</span><br></pre></td></tr></table></figure>
+<p>shared_ptr只有在引用计数为0时才会销毁其所指向的对象。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//factory返回一个shared_ptr，指向一个动态分配的对象</span></span><br><span class="line"><span class="function"><span class="built_in">shared_ptr</span>&lt;<span class="built_in">string</span>&gt; <span class="title">factory</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//一些操作</span></span><br><span class="line">    <span class="keyword">return</span> make_shared&lt;<span class="built_in">string</span>&gt;(<span class="string">&quot;hi&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">use_factory</span><span class="params">(T arg)</span></span>&#123;</span><br><span class="line">    <span class="built_in">shared_ptr</span>&lt;<span class="built_in">string</span>&gt; p = factory();</span><br><span class="line">    <span class="comment">//使用p</span></span><br><span class="line"></span><br><span class="line">&#125;<span class="comment">//p离开函数作用域，引用计数变为0，所指向的内存的被释放</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">shared_ptr</span>&lt;<span class="built_in">string</span>&gt; <span class="title">use_factory</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">shared_ptr</span>&lt;<span class="built_in">string</span>&gt; p = make_shared&lt;<span class="built_in">string</span>&gt;(<span class="string">&quot;hi&quot;</span>);</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="keyword">return</span> p; <span class="comment">//返回p时，会递增引用计数</span></span><br><span class="line">&#125; <span class="comment">//p离开了作用域，但是所指向的内存没有被释放。</span></span><br></pre></td></tr></table></figure>
+<p><strong>shared_ptr和new的结合使用</strong><br>接受指针参数的智能指针的构造函数是explicit的，也就是说不能将一个内置指针隐式转换成一个智能指针。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; p1 = <span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">1024</span>); <span class="comment">//错误，不能使用赋值初始化</span></span><br><span class="line"><span class="function"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">p2</span><span class="params">(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">1024</span>))</span></span>;  <span class="comment">//正确，直接初始化</span></span><br></pre></td></tr></table></figure>
+<p><strong>不要混合使用智能指针和内置指针</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">process</span><span class="params">(<span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; ptr)</span></span>&#123; <span class="comment">//参数是传值方式，也就是调用时实参会被拷贝，引用计数会增加</span></span><br><span class="line">    <span class="comment">//使用ptr</span></span><br><span class="line">&#125;   <span class="comment">//ptr离开作用域，引用计数减一</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//正确使用方法，传递一个shared_ptr</span></span><br><span class="line"><span class="function"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">p</span><span class="params">(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">10</span>))</span></span>;</span><br><span class="line">process(p); <span class="comment">//正确，拷贝p会增加它的引用计数，在process内的引用计数至少为2</span></span><br><span class="line"><span class="keyword">int</span> i = *p;  <span class="comment">//正确， 引用计数至少为1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//错误用法</span></span><br><span class="line"><span class="function"><span class="keyword">int</span>*<span class="title">x</span><span class="params">(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">1024</span>))</span></span>;</span><br><span class="line">process(x); <span class="comment">//错误，不能将一个int*转换成shared_ptr&lt;int&gt;</span></span><br><span class="line">process(<span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt;(x));  <span class="comment">//可以传递，但是函数执行完后x所指向的内存会被释放</span></span><br><span class="line"><span class="keyword">int</span> j = *x; <span class="comment">//错误，此时x指向的内存已被释放。</span></span><br></pre></td></tr></table></figure>
+<p><strong>不要使用get来初始化智能指针或者为智能指针赋值</strong><br>get()返回一个指向智能指针管理对象的内置指针。<br>使用get返回指针的代码不能delete此指针。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">sp</span> <span class="params">(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">10</span>))</span></span>;</span><br><span class="line"><span class="keyword">int</span> *p = sp.get(); <span class="comment">//正确</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//两个独立的shared_ptr指向相同的内存，这两个shared_ptr的引用计数都是1，该程序块内的shared_ptr失效后会销毁其所指向的对象。</span></span><br><span class="line">    <span class="function"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">q</span><span class="params">(p)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> foo = *sp; <span class="comment">//错误，此时sp所指向的内存已被释放</span></span><br></pre></td></tr></table></figure>
+<p>reset()操作</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; sp = make_shared&lt;<span class="keyword">int</span>&gt;(<span class="number">10</span>);</span><br><span class="line">sp.reset(); <span class="comment">//此时sp的引用计数为0，会释放其所指向的对象</span></span><br><span class="line">sp.reset(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">1024</span>)); <span class="comment">//sp指向一个新的值为1024的int对象</span></span><br></pre></td></tr></table></figure>
+
+<p>使用智能指针，即使程序出现异常提前结束，智能指针也能保证正确地释放指针指向的内存。而内置指针无法实现这一点。</p>
+<p><strong>注意陷阱</strong></p>
+<blockquote>
+<ol>
+<li>不要使用相同的内置指针<strong>值初始化</strong>(或者reset)多个智能指针。因为这样其中某一个智能指针失效后会销毁所指向的对象，从而造成另一个智能指针指向的对象不存在了。</li>
+<li>不要delete get()返回的指针。</li>
+<li>不要用get()初始化或者reset另一智能指针。</li>
+<li>如果智能指针管理的资源不是new分配的内存，需要传递一个删除器。</li>
+<li>记住，使用get()返回的指针，在最后一个对应的智能指针被销毁后，返回的指针就无效了。</li>
+</ol>
+</blockquote>
+<h3 id="unique-ptr"><a href="#unique-ptr" class="headerlink" title="unique_ptr"></a>unique_ptr</h3><p>某个时刻只能有一个unique_ptr指向一个给定对象，不支持普通的拷贝和赋值操作。<br>初始化unique_ptr必须使用<strong>直接初始化</strong>形式。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">unique_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">up</span> <span class="params">(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">10</span>))</span></span>;</span><br><span class="line"><span class="function"><span class="built_in">unique_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">up2</span> <span class="params">(up)</span></span>; <span class="comment">//错误。不支持拷贝</span></span><br><span class="line"><span class="built_in">unique_ptr</span>&lt;<span class="keyword">int</span>&gt; up3 = up; <span class="comment">//错误，不支持赋值</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>unique_ptr操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>unique_ptr&lt;T, D&gt; u1;</td>
+<td>空的unique_ptr，会使用类型为D的可调用对象来释放它所指向空间。D默认为delete操作符</td>
+</tr>
+<tr>
+<td>unique_ptr&lt;T, D&gt; u1 (d);</td>
+<td>空unique_ptr,调用类型为D的对象d来代替delete</td>
+</tr>
+<tr>
+<td>u = nullptr;</td>
+<td>释放u指向的对象，将u置空</td>
+</tr>
+<tr>
+<td>u.release();</td>
+<td>u放弃对指针的控制权，返回所指向的指针，并置空u</td>
+</tr>
+<tr>
+<td>u.reset();</td>
+<td>释放u所指向的对象</td>
+</tr>
+<tr>
+<td>u.reset(q);</td>
+<td>令u指向内置指针q，否则置空u</td>
+</tr>
+<tr>
+<td>release()返回unique_ptr当前保存的指针并将其置为空，常用来初始化或给另一智能指针赋值。</td>
+<td></td>
+</tr>
+</tbody></table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">unique_ptr</span>&lt;<span class="built_in">string</span>&gt; <span class="title">p1</span> <span class="params">(<span class="keyword">new</span> <span class="built_in">string</span>(<span class="string">&quot;hi&quot;</span>))</span></span>;</span><br><span class="line"><span class="function"><span class="built_in">unique_ptr</span>&lt;<span class="built_in">string</span>&gt; <span class="title">p2</span> <span class="params">(<span class="keyword">new</span> <span class="built_in">string</span>(<span class="string">&quot;jack&quot;</span>))</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//将p1的所有权转移给p2</span></span><br><span class="line">p2.reset(p1.release());</span><br></pre></td></tr></table></figure>
+<p>唯一一个可以拷贝unique_ptr的例子就是从函数返回一个unique_ptr。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">unique_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">clone</span><span class="params">(p)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">unique_ptr</span>&lt;<span class="keyword">int</span>&gt;(<span class="keyword">new</span> <span class="keyword">int</span>(p));</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//这样也行</span></span><br><span class="line"><span class="function"><span class="built_in">unique_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">clone</span><span class="params">(p)</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="built_in">unique_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">ret</span> <span class="params">(<span class="keyword">new</span> <span class="keyword">int</span>(p))</span></span>;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>auto_ptr是一个早期版本的智能指针，具备部分unique_ptr功能，但已被废弃，尽量不要使用。</p>
+</blockquote>
+<h3 id="weak-ptr"><a href="#weak-ptr" class="headerlink" title="weak_ptr"></a>weak_ptr</h3><p>weak_ptr是一种不控制所指向对象生命周期的智能指针，指向一个由shared_ptr管理的对象。将一个weak_ptr绑定到一个shared_ptr上不会改变shared_ptr的引用计数。<br>不能直接使用weak_ptr访问所指向的对象，而需要使用lock()成员函数。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> p = make_shared&lt;<span class="keyword">int</span>&gt;(<span class="number">42</span>);</span><br><span class="line"><span class="function">weak_ptr&lt;<span class="keyword">int</span>&gt; <span class="title">wkp</span> <span class="params">(p)</span></span>; <span class="comment">//直接初始化wkp</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> mp = wkp.lock(); <span class="comment">//mp指向wkp所指向的对象。</span></span><br></pre></td></tr></table></figure>
+<h3 id="动态数组"><a href="#动态数组" class="headerlink" title="动态数组"></a>动态数组</h3><p>关于动态数组，使用new T[]分配返回的并不是一个数组，而是一个指向数组元素类型的指针。动态数组并不是数组类型。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> dp = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>]; <span class="comment">//10个int的数组，返回指向首元素的指针</span></span><br><span class="line"><span class="keyword">auto</span> ds = <span class="keyword">new</span> <span class="built_in">string</span>[<span class="number">10</span>]; <span class="comment">//同理</span></span><br><span class="line"><span class="keyword">auto</span> de = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">0</span>]; <span class="comment">//动态分配一个空的数组是合法的，但是不能解引用</span></span><br><span class="line"><span class="keyword">delete</span> [] dp;</span><br><span class="line"><span class="keyword">delete</span> [] ds; <span class="comment">//释放动态数组空间，数组元素按逆序销毁。</span></span><br><span class="line"><span class="keyword">delete</span> [] de;</span><br></pre></td></tr></table></figure>
+<p>标准库提供了一个可以管理new分配的动态数组的unique_ptr。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unique_ptr&lt;int[]&gt; up (new int[10]);</span><br><span class="line">up.release(); <span class="comment">//自动调用delete[]销毁指针</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>指向数组的unique_ptr的操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td>指向数组的unique_ptr不支持成员访问运算符(.和-&gt;)</td>
+</tr>
+<tr>
+<td>unique_ptr&lt;T[]&gt; u;</td>
+<td>u可以指向一个动态分配的数组</td>
+</tr>
+<tr>
+<td>unique_ptr&lt;T[]&gt; u(q);</td>
+<td>u指向内置指针所指向的动态数组</td>
+</tr>
+<tr>
+<td>u[i]</td>
+<td>返回u拥有的数组中的第i个元素。</td>
+</tr>
+</tbody></table>
+<p>shared_ptr默认不支持管理动态数组，如果想使用shared_ptr来管理动态数组，必须提供自己的删除器。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">sp</span> <span class="params">(<span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>], [](<span class="keyword">int</span> *p) &#123;<span class="keyword">delete</span> [] p;&#125;)</span></span>;</span><br><span class="line">sp.reset(); <span class="comment">//调用lambda表达式delete[]数组</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="allocator类"><a href="#allocator类" class="headerlink" title="allocator类"></a>allocator类</h3><p>使用allocator类将内存的分配和对象的构造分离开来。<br>可以在分配的内存上按需构造对象，提高效率。<br>如果不使用allocator，没有默认构造函数的类就无法使用动态分配数组了。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>allocator类及其算法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>allocator<T> a;</td>
+<td>定义allocator对象a，可以为类型T的对象分配内存</td>
+</tr>
+<tr>
+<td>a.allocator(n);</td>
+<td>分配一个保存n个类型为T的对象的未构造内存</td>
+</tr>
+<tr>
+<td>a.construct(p, args);</td>
+<td>p必须是指向类型为T*的未构造的内存，args被传递给类型为T的构造函数，用于在内存中构造对象。</td>
+</tr>
+<tr>
+<td>a.destroy(p);</td>
+<td>对p指向的对象执行析构函数。</td>
+</tr>
+<tr>
+<td>a.deallocate(p, n);</td>
+<td>释放从T* p所指向的位置开始的n个类型为T的对象，p必须是由allocator返回的指针，n必须是创建时的大小。在deallocate之前，内存中的对象必须先被destroy。</td>
+</tr>
+</tbody></table>
+<p>allocator分配的内存是原始的，未构造的。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">allocator&lt;<span class="built_in">string</span>&gt; alloc;</span><br><span class="line"><span class="keyword">auto</span> p = alloc.allocate(<span class="number">10</span>); <span class="comment">//分配10个未初始化的string</span></span><br><span class="line"><span class="keyword">auto</span> q = p; <span class="comment">//q指向最后构造的元素之后的位置</span></span><br><span class="line">alloc.construct(q++); <span class="comment">//q为空字符串</span></span><br><span class="line">alloc.construct(q++, <span class="number">10</span>, <span class="string">&#x27;c&#x27;</span>); <span class="comment">//*q为cccccccccc</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; *p &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//正确，因为p所指向的内存已有对象</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; *q &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// 错误，q指向未构造的内存，因为q++指向下一个未构造的内存了。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(q != p)&#123;</span><br><span class="line">    alloc.destory(--q); <span class="comment">//销毁q指向的对象</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//之后可以将分配的内存释放掉</span></span><br><span class="line">alloc.deallocate(p, <span class="number">10</span>); <span class="comment">//之所以是10是因为deallocate的大小必须和allocate的大小一致</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="拷贝和填充未初始化内存的算法"><a href="#拷贝和填充未初始化内存的算法" class="headerlink" title="拷贝和填充未初始化内存的算法"></a>拷贝和填充未初始化内存的算法</h3><p>如果觉得向上面一个一个construct比较麻烦，可以使用标准库的拷贝填充算法。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>allocator拷贝填充算法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>uninitialized_copy(b, e, b2);</td>
+<td>从迭代器b和e指出的输入范围中<strong>拷贝</strong>元素到迭代器b2指定的未构造的原始内存中，b2指向的内存必须足够大。</td>
+</tr>
+<tr>
+<td>uninitialized_copy_n(b, n, b2);</td>
+<td>从迭代器b开始，拷贝n个元素到迭代器b2指向的原始内存中。</td>
+</tr>
+<tr>
+<td>uninitialized_fill(b, e, t);</td>
+<td>在迭代器b,e指定的范围内创建对象，对象的值均为t的拷贝。</td>
+</tr>
+<tr>
+<td>uninitialized_fill_n(b, n, t);</td>
+<td>从迭代器b指向的内存开始创建n个对象。其值为t</td>
+</tr>
+</tbody></table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//p指向一个分配大小为vi两倍的内存</span></span><br><span class="line"><span class="keyword">auto</span> p = alloc.allocate(vi.size() * <span class="number">2</span>);</span><br><span class="line"><span class="comment">//将vi中的元素拷贝到p指向的内存中， 返回的q指向最后一个构造的对象的后一个位置</span></span><br><span class="line"><span class="keyword">auto</span> q = uninitialized_copy(vi.begin(), vi.end(), p); </span><br><span class="line">uninitialized_fill_n(q, vi,size(), <span class="number">42</span>); <span class="comment">//将剩余的内存全部初始化为42</span></span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" class="archive-article-date">
-  	<time datetime="2020-12-01T08:05:18.994Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/12/01/C++Primer-%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-12-01T08:04:08.615Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E9%87%8D%E8%BD%BD%E8%BF%90%E7%AE%97%E4%B8%8E%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" class="archive-article-date">
-  	<time datetime="2020-12-01T08:02:39.463Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+<nav id="article-nav">
+  
+    <a href="/2020/12/01/C++Primer-%E9%87%8D%E8%BD%BD%E8%BF%90%E7%AE%97%E4%B8%8E%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/12/01/C++Primer-%E6%8B%B7%E8%B4%9D%E6%8E%A7%E5%88%B6/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/" class="archive-article-date">
-  	<time datetime="2020-12-01T08:01:20.342Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E6%8B%B7%E8%B4%9D%E6%8E%A7%E5%88%B6/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:59:43.813Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+        
+        
+    </div>
+</aside>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:58:25.927Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:57:19.076Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-IO%E5%BA%93/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:55:39.897Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E5%87%BD%E6%95%B0/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:54:34.153Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:53:31.560Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &amp;raquo;</a>
-    </nav>
+  
+
+  
+    <section id="comments">
+      <div id="disqus_thread"></div>
+        <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'true'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </section>
+  
+
   
 
 
@@ -402,8 +567,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

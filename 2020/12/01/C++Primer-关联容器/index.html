@@ -6,13 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives | JimmyTang&#39;Blog</title>
+  <title>JimmyTang&#39;Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="关联容器概述关联容器支持普通容器的操作，不支持顺序容器中位置相关的操作，如push_back等，也不支持构造函数或插入操作的接收一个元素值和数量值得操作，如vector&lt; int&gt;v(10,0)。     普通容器的操作    类型别名    iterator 此容器类型的迭代器   const_iterator 可以读取元素，但不能修改元素的迭代器类型   size_type 无符号">
+<meta property="og:type" content="article">
 <meta property="og:title" content="JimmyTang&#39;Blog">
-<meta property="og:url" content="http://example.com/archives/index.html">
+<meta property="og:url" content="http://example.com/2020/12/01/C++Primer-%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/index.html">
 <meta property="og:site_name" content="JimmyTang&#39;Blog">
+<meta property="og:description" content="关联容器概述关联容器支持普通容器的操作，不支持顺序容器中位置相关的操作，如push_back等，也不支持构造函数或插入操作的接收一个元素值和数量值得操作，如vector&lt; int&gt;v(10,0)。     普通容器的操作    类型别名    iterator 此容器类型的迭代器   const_iterator 可以读取元素，但不能修改元素的迭代器类型   size_type 无符号">
 <meta property="og:locale">
+<meta property="article:published_time" content="2020-12-01T07:58:25.927Z">
+<meta property="article:modified_time" content="2020-12-01T07:58:25.927Z">
 <meta property="article:author" content="JimmyTang">
 <meta name="twitter:card" content="summary">
   
@@ -150,235 +154,591 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-C++Primer-关联容器" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="关联容器"><a href="#关联容器" class="headerlink" title="关联容器"></a>关联容器</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>关联容器支持普通容器的操作，不支持顺序容器中<strong>位置相关</strong>的操作，如push_back等，也不支持构造函数或插入操作的接收一个元素值和数量值得操作，如vector&lt; int&gt;v(10,0)。</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">普通容器的操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>类型别名</strong></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">iterator</td>
+<td align="center">此容器类型的迭代器</td>
+</tr>
+<tr>
+<td align="center">const_iterator</td>
+<td align="center">可以读取元素，但不能修改元素的迭代器类型</td>
+</tr>
+<tr>
+<td align="center">size_type</td>
+<td align="center">无符号整数类型，足够保存此种容器类型最大可能容器的大小</td>
+</tr>
+<tr>
+<td align="center">diference_type</td>
+<td align="center">带符号整数类型，足够保存两个迭代器之间的距离</td>
+</tr>
+<tr>
+<td align="center">value_type</td>
+<td align="center">元素类型</td>
+</tr>
+<tr>
+<td align="center">refernce</td>
+<td align="center">左值引用；与value_type&amp;含义相同</td>
+</tr>
+<tr>
+<td align="center">const_refernce</td>
+<td align="center">元素的const左值类型（const value_type&amp;）</td>
+</tr>
+<tr>
+<td align="center"><strong>构造函数</strong></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">C c;</td>
+<td align="center">默认构造函数，构造空容器（array除外）</td>
+</tr>
+<tr>
+<td align="center">C c1(c2)</td>
+<td align="center">用c2来拷贝构造c1</td>
+</tr>
+<tr>
+<td align="center">C c3(b, e)</td>
+<td align="center">用迭代器b,e范围内的元素拷贝构造c3(array不支持)</td>
+</tr>
+<tr>
+<td align="center">C c{a,b,d,…}</td>
+<td align="center">列表初始化c</td>
+</tr>
+<tr>
+<td align="center"><strong>赋值与交换</strong></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">c1 = c2</td>
+<td align="center">将c1中的值替换成c2的值</td>
+</tr>
+<tr>
+<td align="center">c1 = {a,b,d,…}</td>
+<td align="center">将c1中的值替换成列表元素</td>
+</tr>
+<tr>
+<td align="center">a.swap(b)</td>
+<td align="center">交换a和b的元素</td>
+</tr>
+<tr>
+<td align="center">swap(a,b)</td>
+<td align="center">与上等价</td>
+</tr>
+<tr>
+<td align="center">大小</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">c.size()</td>
+<td align="center">c中元素的数目（forward_list不支持）</td>
+</tr>
+<tr>
+<td align="center">c.max_size()</td>
+<td align="center">c中可保存的最大元素数目</td>
+</tr>
+<tr>
+<td align="center">c.empty()</td>
+<td align="center">若c中存储了元素，则返回false，否则返回true</td>
+</tr>
+<tr>
+<td align="center"><strong>添加删除元素</strong>(array不支持,不同容器接口不尽相同)</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">c.insert(args)</td>
+<td align="center">将args插入c</td>
+</tr>
+<tr>
+<td align="center">c.emplace(inits)</td>
+<td align="center">使用inits构造c中的一个元素</td>
+</tr>
+<tr>
+<td align="center">c.erase(args)</td>
+<td align="center">删除args指定的元素</td>
+</tr>
+<tr>
+<td align="center">c.clear()</td>
+<td align="center">删除c中所有元素，返回void</td>
+</tr>
+<tr>
+<td align="center"><strong>关系运算符</strong></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">==, !=</td>
+<td align="center">所有容器都支持相等(不等)运算符</td>
+</tr>
+<tr>
+<td align="center">&lt;,&lt;=,&gt;,&gt;=</td>
+<td align="center">关系运算符(无序关联容器不支持)</td>
+</tr>
+<tr>
+<td align="center"><strong>获取迭代器</strong></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">c.begin(),c.end()</td>
+<td align="center">返回指向c中首元素和尾元素之后位置的迭代器</td>
+</tr>
+<tr>
+<td align="center">c.cbegin(),c.cend()</td>
+<td align="center">返回常迭代器</td>
+</tr>
+<tr>
+<td align="center"><strong>反向容器的额外成员</strong></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">reverse_iterator</td>
+<td align="center">逆序寻址元素的迭代器</td>
+</tr>
+<tr>
+<td align="center">const_reverse_iterator</td>
+<td align="center">不修改元素的逆序迭代器</td>
+</tr>
+<tr>
+<td align="center">c.rbegin(),c.rend()</td>
+<td align="center">返回指向c的尾元素和首元素之前位置的迭代器</td>
+</tr>
+<tr>
+<td align="center">c.crbegin(),c.crend()</td>
+<td align="center">返回const_reverse_iterator</td>
+</tr>
+</tbody></table>
+<p>关联容器的迭代器都是双向的。</p>
+<table>
+<thead>
+<tr>
+<th><strong>关联容器额外的类型别名</strong></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>key_type</td>
+<td align="center">此容器类型的关键字类型</td>
+</tr>
+<tr>
+<td>mapped_type</td>
+<td align="center">每个关键字关联的类型，只适用于map</td>
+</tr>
+<tr>
+<td>value_type</td>
+<td align="center">对于set，与key_value相同，对于map,为pair&lt;const key_type, mapped_type&gt;</td>
+</tr>
+</tbody></table>
+<p>关联容器通常不使用泛型算法，也就是STL中的算法。因为set中元素是const的，map中pair.first也是const的，会修改容器元素的算法都不能使用。可以用于<font color=red>只读取元素</font>的算法，但是会比较慢，不如关联容器内置的算法。</p>
+<h2 id="有序容器"><a href="#有序容器" class="headerlink" title="有序容器"></a>有序容器</h2><h3 id="pair"><a href="#pair" class="headerlink" title="pair"></a><strong>pair</strong></h3><p>存放在头文件utility中。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th align="center">pair操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>pair&lt;T1, T2&gt;p;</td>
+<td align="center">定义类型为T1、T2类型的pair，并进行值初始化。</td>
+</tr>
+<tr>
+<td>pair&lt;T1, T2&gt;p(v1,v2);</td>
+<td align="center">如上，其first和second成员被初始化为v1,v2。</td>
+</tr>
+<tr>
+<td>pair&lt;T1,T2&gt;p = {v1,v2};</td>
+<td align="center">等价于上面。</td>
+</tr>
+<tr>
+<td>make_pair(v1,v2);</td>
+<td align="center">返回v1,v2初始化的pair,其类型从v1,v2类型推断出来。</td>
+</tr>
+<tr>
+<td>p.first</td>
+<td align="center">返回p的名为first的共有数据成员。</td>
+</tr>
+<tr>
+<td>p.second</td>
+<td align="center">返回p的名为second的共有数据成员。</td>
+</tr>
+<tr>
+<td>p1 relop p2</td>
+<td align="center">关系运算符(&lt;,&lt;=,&gt;,&gt;=)按字典序定义：当p1.first&lt;p2.first &amp;&amp; p1.second &lt; p2.second成立时，p1 &lt; p2返回true。</td>
+</tr>
+<tr>
+<td>p1 == p2</td>
+<td align="center">first和second两个成员分别相等时成立。</td>
+</tr>
+</tbody></table>
+<p><font color=red>map(multimap)</font>的value_type是一个pair，其first成员保存const的关键字，second成员保存值。</p>
+<p>遍历map</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt;word_count = &#123;&#123;<span class="string">&quot;Tim&quot;</span>, <span class="number">20</span>&#125;, &#123;<span class="string">&quot;Jack&quot;</span>, <span class="number">15</span>&#125;, &#123;<span class="string">&quot;Rose&quot;</span>, <span class="number">30</span>&#125;&#125;;</span><br><span class="line"><span class="keyword">auto</span> map_iter = word_count.cbegin();</span><br><span class="line"><span class="keyword">while</span>(map_iter != word_count.cend())&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; map_iter-&gt;first &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; map_iter-&gt;second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    ++map_iter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>map、multimap、set、multiset的迭代器按照关键字升序遍历元素。</p>
+<p>添加元素：</p>
+<table>
+<thead>
+<tr>
+<th>map</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>map.insert(v);</td>
+<td>v是value_type对象</td>
+</tr>
+<tr>
+<td>map.emplace(args);</td>
+<td>返回pair，其first是一个迭代器，指向具有指定关键字的元素，second是指示插入是否成功的bool值，对于multimap和multiset总会插入给定元素，并返回指向新元素的迭代器。</td>
+</tr>
+<tr>
+<td>map.insert(b, e);</td>
+<td>b,e是迭代器，表示一个c::value_type类型的范围。</td>
+</tr>
+<tr>
+<td>map.insert({…})</td>
+<td>插入花括号的值列表，返回<strong>void</strong>。对于set和map,只会插入不在容器中的关键字，对于multiset和multimap则每个元素都会插入。</td>
+</tr>
+<tr>
+<td>map.insert(p,v)</td>
+<td>p是迭代器，表示从p开始搜索新元素应该存储的位置，返回一个指向具有给定关键字的迭代器。</td>
+</tr>
+<tr>
+<td>map.emplace(p,v)</td>
+<td>同上版本</td>
+</tr>
+</tbody></table>
+<p>对于插入的返回值，可以写成这样：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">pair</span>&lt;<span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt;::iterator, <span class="keyword">bool</span>&gt; ret = word_count.insert(<span class="built_in">make_pair</span>(word, <span class="number">1</span>));</span><br><span class="line"><span class="comment">//插入的返回值是一个pair,其first是word_count同类型的迭代器，，second是表示插入是否成功的bool值。</span></span><br></pre></td></tr></table></figure>
+
+<p>set的迭代器是const的，也就是说迭代器只能访问set成员，而不能修改。</p>
+<p>向multimap、multiset中插入元素：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">multimap</span>&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt;authors;</span><br><span class="line"><span class="comment">//插入 第一个元素，关键字为Tom</span></span><br><span class="line">authors.insert(&#123;<span class="string">&quot;Tom&quot;</span>, <span class="string">&quot;Book1&quot;</span>&#125;);</span><br><span class="line"><span class="comment">//插入第二个元素，关键字还是Tom</span></span><br><span class="line">authors.insert(&#123;<span class="string">&quot;Tom&quot;</span>, <span class="string">&quot;Book2&quot;</span>&#125;);<span class="comment">//正确，multi关联容器关键字不唯一。</span></span><br></pre></td></tr></table></figure>
+
+<p>删除元素</p>
+<p>关联容器定义了3个版本的erase：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>关联容器删除元素</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>c.erase(k)</td>
+<td>删除c中每个关键字为k的元素。返回size_type值，表示删除元素的数量。</td>
+</tr>
+<tr>
+<td>c.erase(p)</td>
+<td>从c中删除迭代器p指向的c中的元素，且不能是c.end()。返回指向p之后元素的迭代器。</td>
+</tr>
+<tr>
+<td>c.erase(b, e)</td>
+<td>删除迭代器b和e所表示范围内的元素，返回迭代器e。</td>
+</tr>
+</tbody></table>
+<p>map的下标操作(查找元素时推荐用find函数)：</p>
+<p>map和unordered_map支持下表运算符和对应的at()函数。set类、multi类不支持。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>map\unordered_map的下标操作和at()函数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>c[k]</td>
+<td>返回关键字为k的元素，若c中不存在k，则添加一个关键字为k的元素并进行值初始化。</td>
+</tr>
+<tr>
+<td>c.at(k)</td>
+<td>访问关键字为k的元素，带参数检查，若k不在c中，抛出out_of_range异常</td>
+</tr>
+<tr>
+<td>下标操作要注意的是，<strong>如果下标关键字不在map中，会为该容器自动创建一个该关键字的元素，且其映射值会进行值初始化！</strong></td>
+<td></td>
+</tr>
+</tbody></table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt;word_count; <span class="comment">//这是空的map</span></span><br><span class="line">word_count[<span class="string">&quot;Tom&quot;</span>] = <span class="number">1</span>; <span class="comment">//map中没有关键字为Tom的元素，自动创建该元素。。</span></span><br></pre></td></tr></table></figure>
+<p>并且由于下标操作会改变容器，所以只能对非const的map和unordered_map进行下标操作！</p>
+<p>map下标运算符返回值与其他下标运算符返回值另一个不同之处：同常情况下，解引用一个迭代器返回的类型和下标运算返回的类型是一样的，<font color=red>但是对map进行下标操作是，返回的是mapped_type对象，解引用map的迭代器时会得到value_type对象。</font><br>map的下标运算符与其他下标运算符一样，返回一个左值，我们可以对下标操作的元素进行读和写。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span>&lt;&lt; word_count[<span class="string">&quot;Tom&quot;</span>]; <span class="comment">//提取关键字为Tom的元素，打印结果是1.</span></span><br><span class="line">++ word_count[<span class="string">&quot;Tom&quot;</span>]; <span class="comment">//修改元素</span></span><br><span class="line"><span class="built_in">cout</span>&lt;&lt; word_count[<span class="string">&quot;Tom&quot;</span>] <span class="comment">//会输出2</span></span><br></pre></td></tr></table></figure>
+
+<p>访问元素</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>访问关联容器中元素的操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td>下标操作和at()只适用于非const的map和unordered_map。</td>
+</tr>
+<tr>
+<td>c.find(k)</td>
+<td>返回指向第一个关键字为k的迭代器，若k不在容器中，则返回尾后迭代器。</td>
+</tr>
+<tr>
+<td>c.count(k)</td>
+<td>返回关键字等于k的元素的数量。对于不允许重复关键字的容器，返回值只能是0或1.</td>
+</tr>
+<tr>
+<td>c.lower_bound(k)</td>
+<td>返回指向第一个关键字不小于k的元素的迭代器。</td>
+</tr>
+<tr>
+<td>c.upper_bound(k)</td>
+<td>返回指向第一个关键字大于k的元素的迭代器。</td>
+</tr>
+<tr>
+<td>c.equal_range(k)</td>
+<td>返回一个迭代器pair,表示关键字等于k的元素的范围，若k不在c中，则pair的两个成员均为c.end()。</td>
+</tr>
+</tbody></table>
+<p><strong>如果只需要确定元素是否在一个容器中，使用find(k)而不是[k]!</strong></p>
+<p><font color=red>对于multimap和multiset，如果具有多个相同的关键字，则这些元素会相邻存储。</font></p>
+<p>对于c.lower_bound()和c.upper_bound(),两者组合可得到关键字等于k的元素的范围。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> begin = word_count.lower_bound(k), end = word_count.upper_bound(k); begin != end; ++begin)&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; begin.second &lt;&lt;<span class="built_in">endl</span>; <span class="comment">//输出关键字等于k的元素的值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果lower_bound和upper_bound返回相同迭代器，说明该关键字不在容器中。</p>
+<p>equal_range(k)<br>直接返回关键字等于k的元素的范围，等价于lower_bound和upper_bound。其返回值是一个迭代器pair。第一个迭代器指向第一个与关键字匹配的元素，第二个迭代器指向最后一个匹配的元素的<strong>后一个位置</strong>。</p>
+<h2 id="无序容器"><a href="#无序容器" class="headerlink" title="无序容器"></a>无序容器</h2><p>unordered_map、unordered_set、unordered_multimap、unordered_multiset。<br>无序关联容器不是使用比较运算符(&lt;,&lt;=,&gt;,&gt;=,默认使用&lt;来进行比较)来组织元素的，而是使用哈希函数和关键字类型的==运算符。<br>无序容器在存储上组织为一个桶，使用哈希函数将元素映射到相应桶。对哈希函数的要求是，相同的参数，哈希函数必须总是产生相同都得结果，但是不同参数产生相同的结果也是允许的。</p>
+<p>与有序容器不同，不能直接定义关键字类型为自定义类型的无序容器,如果确实需要定义这样类型的容器，需要提供该自定义类型的hash模板。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>无序容器管理操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>桶接口</td>
+<td></td>
+</tr>
+<tr>
+<td>c.bucket_count()</td>
+<td>正在使用的桶的数目。</td>
+</tr>
+<tr>
+<td>c.max_bucket_count()</td>
+<td>容器能容纳最多的桶的数量。</td>
+</tr>
+<tr>
+<td>c.bucket_size(n)</td>
+<td>第n个桶有多少个元素。</td>
+</tr>
+<tr>
+<td>c.bucket(k)</td>
+<td>关键字为k的元素在哪个桶中。</td>
+</tr>
+<tr>
+<td>桶迭代</td>
+<td></td>
+</tr>
+<tr>
+<td>local_iterator</td>
+<td>可以用来访问桶中元素的迭代器类型。</td>
+</tr>
+<tr>
+<td>const_local_iterator</td>
+<td>桶迭代器的const版本。</td>
+</tr>
+<tr>
+<td>c.begin(n),c.end(n)</td>
+<td>桶n的首元素迭代器和尾后迭代器。</td>
+</tr>
+<tr>
+<td>c.cbegin(n),c.cend(n)</td>
+<td>上面的const版本。</td>
+</tr>
+<tr>
+<td>哈希策略</td>
+<td></td>
+</tr>
+<tr>
+<td>c.load_factor()</td>
+<td>每个桶的平均元素数量，float型。</td>
+</tr>
+<tr>
+<td>c.max_load_factor()</td>
+<td>c试图维护的平均桶大小，返回float值。c会在需要时添加新的桶，使得load_factor&lt;=max_load_factor。</td>
+</tr>
+<tr>
+<td>c.rehsah(n)</td>
+<td>重组存储，使得bucket_count &gt;= n且bucket_count&gt;=n。</td>
+</tr>
+<tr>
+<td>c.reserve(n)</td>
+<td>重组存储，使得c可以保存n个元素且不必rehash。</td>
+</tr>
+</tbody></table>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" class="archive-article-date">
-  	<time datetime="2020-12-01T08:05:18.994Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/12/01/C++Primer-%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-12-01T08:04:08.615Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E9%87%8D%E8%BD%BD%E8%BF%90%E7%AE%97%E4%B8%8E%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" class="archive-article-date">
-  	<time datetime="2020-12-01T08:02:39.463Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+<nav id="article-nav">
+  
+    <a href="/2020/12/01/C++Primer-%E6%8B%B7%E8%B4%9D%E6%8E%A7%E5%88%B6/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/12/01/C++Primer-%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/" class="archive-article-date">
-  	<time datetime="2020-12-01T08:01:20.342Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E6%8B%B7%E8%B4%9D%E6%8E%A7%E5%88%B6/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:59:43.813Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+        
+        
+    </div>
+</aside>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:58:25.927Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:57:19.076Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-IO%E5%BA%93/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:55:39.897Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E5%87%BD%E6%95%B0/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:54:34.153Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:53:31.560Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &amp;raquo;</a>
-    </nav>
+  
+
+  
+    <section id="comments">
+      <div id="disqus_thread"></div>
+        <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'true'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </section>
+  
+
   
 
 
@@ -402,8 +762,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

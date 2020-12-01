@@ -6,13 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives | JimmyTang&#39;Blog</title>
+  <title>JimmyTang&#39;Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="面向对象的程序设计核心思想：数据抽象、继承和动态绑定。 引用和指针的静态类型和动态类型不总是相同，这一点是C++支持多态的根本。 动态绑定只有通过指针或者引用调用虚函数时才会发生。  基类和派生类  1234567891011121314151617181920212223242526272829303132class Quote&amp;#123;    public:    Quote() &#x3D; def">
+<meta property="og:type" content="article">
 <meta property="og:title" content="JimmyTang&#39;Blog">
-<meta property="og:url" content="http://example.com/archives/index.html">
+<meta property="og:url" content="http://example.com/2020/12/01/C++Primer-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/index.html">
 <meta property="og:site_name" content="JimmyTang&#39;Blog">
+<meta property="og:description" content="面向对象的程序设计核心思想：数据抽象、继承和动态绑定。 引用和指针的静态类型和动态类型不总是相同，这一点是C++支持多态的根本。 动态绑定只有通过指针或者引用调用虚函数时才会发生。  基类和派生类  1234567891011121314151617181920212223242526272829303132class Quote&amp;#123;    public:    Quote() &#x3D; def">
 <meta property="og:locale">
+<meta property="article:published_time" content="2020-12-01T08:05:18.994Z">
+<meta property="article:modified_time" content="2020-12-01T08:05:18.994Z">
 <meta property="article:author" content="JimmyTang">
 <meta name="twitter:card" content="summary">
   
@@ -150,235 +154,289 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-C++Primer-面向对象程序设计" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="面向对象的程序设计"><a href="#面向对象的程序设计" class="headerlink" title="面向对象的程序设计"></a>面向对象的程序设计</h1><p>核心思想：数据抽象、继承和动态绑定。</p>
+<p>引用和指针的静态类型和动态类型不总是相同，这一点是C++支持多态的根本。</p>
+<p>动态绑定只有通过指针或者引用调用虚函数时才会发生。</p>
+<ul>
+<li><h3 id="基类和派生类"><a href="#基类和派生类" class="headerlink" title="基类和派生类"></a>基类和派生类</h3></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Quote</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    Quote() = <span class="keyword">default</span>;</span><br><span class="line">    Quote(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;book, <span class="keyword">double</span> sales_price) : bookNo(book), price(sales_price) &#123;&#125;</span><br><span class="line">    <span class="function"><span class="built_in">std</span>::<span class="built_in">string</span> <span class="title">isbn</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;<span class="keyword">return</span> bookNo;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回给定数量的书籍的销售总额，派生类负责改写并实现不同的计算方法</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">double</span> <span class="title">net_price</span><span class="params">(<span class="built_in">std</span>::<span class="keyword">size_t</span> n)</span> <span class="keyword">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> n * sales_price;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">virtual</span> ~Quote() = <span class="keyword">default</span>;   <span class="comment">//对析构函数进行动态绑定,基类通常都应该定义一个虚析构函数。</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> bookNo;</span><br><span class="line">    <span class="keyword">protected</span>:</span><br><span class="line">    <span class="keyword">double</span> price = <span class="number">0</span>;    </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义派生类</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bulk_Quote</span> :</span> <span class="keyword">public</span> Quote&#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    Bulk_Quote() = <span class="keyword">default</span>;</span><br><span class="line">    Bulk_Quote(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp;, <span class="keyword">double</span>, <span class="built_in">std</span>::<span class="keyword">size_t</span>, <span class="keyword">double</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//覆盖基类的net_price函数</span></span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">net_price</span><span class="params">(<span class="built_in">std</span>::<span class="keyword">size_t</span>)</span> <span class="keyword">const</span> <span class="keyword">override</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">std</span>::<span class="keyword">size_t</span> min_qty = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">double</span> discount;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>关于virtual虚函数，构造函数之外的任何非静态函数都可以是虚函数，包括<kbd>析构函数</kbd>,virtual只能出现在类内部声明语句而不能出现在类外部定义语句中。如果派生类没有覆盖基类中的某个虚函数，那么派生类就会直接继承基类中的版本。override显式地注明该函数覆盖了它继承的虚函数，放在常成员函数const、引用成员函数的引用限定符(&amp;,&amp;&amp;)之后。</p>
+<ul>
+<li>为什么派生类的对象能当成基类对象来使用呢？？</li>
+<li>因为派生类对象中含有与其基类对应的组成成分，所以可以将基类的指针或者引用绑定到派生类对象上。</li>
+</ul>
+<p>派生类初始化过程：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//先初始化基类Quote部分，等到Quote构造函数函数体执行完后再初始化min_qty,discount这两顺序由在类体中声明的顺序决定。最后再执行空函数体。</span></span><br><span class="line">Bulk_Quote(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; book, <span class="keyword">double</span> p, <span class="built_in">std</span>::<span class="keyword">size_t</span> qty, <span class="keyword">double</span> disc) : Quote(book, p), min_qty(qty), discount(dis) &#123; &#125; </span><br></pre></td></tr></table></figure>
+
+<p><strong>继承中的静态成员</strong></p>
+<p>若基类存在静态成员，在整个继承体系中只存在该成员的唯一实例。</p>
+<p><strong>防止继承</strong></p>
+<p><kbd>final</kbd>关键字</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Last</span> <span class="keyword">final</span> :</span> Base &#123; <span class="comment">//final放在派生列表之前</span></span><br><span class="line">    <span class="comment">///</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>类型转换与继承</strong></p>
+<p>基类的指针或者引用的静态类型可能与动态类型不一致，也就是基类指针引用可以指向派生类对象。但是基类的变量的静态类型和动态类型必须是一致的 。</p>
+<p><font color=red>不存在基类向派生类的隐式转换。</font>可以有显式转换dynamic_cast和static_cast。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Quote base;</span><br><span class="line">Bulk_Quote* d1 = &amp;base; <span class="comment">//错误，不能将基类转换成派生类</span></span><br><span class="line">Bulk_Quote&amp; d2 = base;  <span class="comment">//错误，同理</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//即使一个基类指针已经指向了派生类对象，也不能实现基类向派生类的转换</span></span><br><span class="line">Bulk_Quote bulk;</span><br><span class="line">Quote *item = &amp;bulk;</span><br><span class="line">Bulk_Quote *bp = item;  <span class="comment">//错误</span></span><br></pre></td></tr></table></figure>
+
+<p><font color=red>类对象之间不存在类型转换。</font></p>
+<p>当用派生类对象初始化或者赋值基类对象时，只有派生类对象中的基类部分会被拷贝移动或者赋值，派生类的其他部分会被忽略掉。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Bulk_Quote bulk;</span><br><span class="line"><span class="function">Quote <span class="title">item</span><span class="params">(bulk)</span></span>; <span class="comment">//调用的是Quote::Quote(const Quote&amp;)构造函数。</span></span><br><span class="line">item = bulk;      <span class="comment">//调用的是Quote::operator = (const Quote&amp;)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="虚函数"><a href="#虚函数" class="headerlink" title="虚函数"></a>虚函数</h3><p>所有的虚函数必须有定义。</p>
+<p>virtual关键字：指明派生类中的虚函数。</p>
+<p>final关键字：指明后续的任何覆盖该函数的行为都是不允许的。</p>
+<p>这两个关键字应出现在形参列表及尾置返回类型之后。</p>
+<p>一般情况下，基类和派生类中的虚函数的默认实参最好保持一致。</p>
+<p><strong>虚函数表的内容没有？？？</strong></p>
+<p><strong>回避虚函数的机制</strong></p>
+<p>可以使用位作用域运算符::指定执行虚函数的某个版本。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> undis = Base-&gt;Quote::net_price(<span class="number">42</span>);  <span class="comment">//指定调用基类的net_price</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>什么时候需要回避虚函数机制呢？？</p>
+<p>通常是在派生类虚函数需要调用它所覆盖掉的基类版本虚函数时。<br>如果一个派生类虚函数需要调用它的基类版本，但是没有使用作用域运算符，则会在运行时被解析为对派生类版本虚函数的自身调用，从而导致无限递归。</p>
+</blockquote>
+<h3 id="抽象基类"><a href="#抽象基类" class="headerlink" title="抽象基类"></a>抽象基类</h3><p><strong>纯虚函数</strong></p>
+<p>纯虚函数无需定义。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Disc_quote</span> :</span> <span class="keyword">public</span> Quote&#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    Disc_quote() = <span class="keyword">default</span>;</span><br><span class="line">    Disc_quote(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; book, <span class="keyword">double</span> price, <span class="built_in">std</span>::<span class="keyword">size_t</span> qty, <span class="keyword">double</span> disc) :</span><br><span class="line">                Quote(book, price), quantity(qty), discount(disc) &#123;&#125;</span><br><span class="line">    <span class="comment">//纯虚函数，=0只能出现在类内部声明处</span></span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">net_price</span><span class="params">(<span class="built_in">std</span>::<span class="keyword">size_t</span>)</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;  </span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span>:</span><br><span class="line">    <span class="built_in">std</span>::<span class="keyword">size_t</span> quantity = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">double</span> discount = <span class="number">0.0</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>含有纯虚函数的类叫做抽象类。抽象类不能直接定义对象，需要通过继承覆盖纯虚函数才行。</p>
+<p>派生类只初始化它的直接基类。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bulk_quote</span> :</span> <span class="keyword">public</span> Disc_quote&#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    Bulk_quote() = <span class="keyword">default</span>;</span><br><span class="line">    Bulk_quote(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; book, <span class="keyword">double</span> price, <span class="built_in">std</span>::<span class="keyword">size_t</span> qty, <span class="keyword">double</span> disc) :</span><br><span class="line">                    Disc_quote(book, price, qty, disc);</span><br><span class="line">    <span class="comment">//覆盖抽象基类的版本</span></span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">net_price</span><span class="params">(<span class="built_in">std</span>::<span class="keyword">size_t</span>)</span> <span class="keyword">const</span> <span class="keyword">override</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//此时的继承关系是：Quote-&gt;Disc_quote-&gt;Bulk_quote。</span></span><br><span class="line">Bulk_quote bq;</span><br></pre></td></tr></table></figure>
+<p>此时定义一个Bulk_quote对象bq的过程是：</p>
+<ul>
+<li>Bulk_quote构造函数将实参传递给Disc_quote的构造函数，Disc_quote的构造函数将实参再传递给Quote的构造函数。</li>
+<li>Quote构造函数先初始化bookNo和price成员，然后执行Quote构造函数的函数体。</li>
+<li>执行完Quote构造函数体之后，运行Disc_quote的构造函数并初始化quantity和discount成员，之后执行Disc_quote构造函数体。</li>
+<li>最后执行Bulk_quote的构造函数。</li>
+</ul>
+<h3 id="访问控制和继承"><a href="#访问控制和继承" class="headerlink" title="访问控制和继承"></a>访问控制和继承</h3><p><strong>保护成员</strong></p>
+<ul>
+<li>与私有成员类似，类对象不能访问受保护成员。</li>
+<li>与共有成员类似，派生类的成员和友元可以访问到基类的受保护成员。</li>
+<li>但是派生类的成员或者友元只能通过派生类对象来访问基类受保护的成员，不能通过基类对象来访问受保护成员。</li>
+<li>同时，派生类成员不能访问基类的private成员。</li>
+</ul>
+<p><strong>共有、私有和受保护继承</strong></p>
+<p>派生访问说明符的作用是：<strong>控制派生类用户对基类成员的访问权限</strong>。</p>
+<p>派生类访问说明符对于派生类的成员和友元能否访问基类的成员没有影响。</p>
+<ol>
+<li><p>public继承</p>
+<p>不改变基类成员的访问属性。</p>
+<p>派生类内能访问基类的public、protected成员。</p>
+<p>派生类对象能访问基类的public成员。</p>
+</li>
+<li><p>protected继承</p>
+<p>基类中的public、protected成员在派生类中的访问属性变成protected。</p>
+<p>派生类内能访问基类的public、protected成员。</p>
+<p>派生类对象不能直接访问基类的所有成员，相当于基类的public成员变成了派生类的protected成员。</p>
+<p>派生类的派生类内可以访问到基类的public、protected成员。</p>
+</li>
+<li><p>private继承</p>
+<p>基类中的public和protected成员在派生类中的访问属性变成private。</p>
+<p>派生类的派生类不能访问到基类的所有成员。</p>
+</li>
+</ol>
+<p><strong>友元与继承</strong></p>
+<p>友元关系不能传递，也不能继承。</p>
+<p><strong>改变个别成员的可访问性</strong></p>
+<p>使用using改变访问属性。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">std</span>::<span class="keyword">size_t</span> <span class="title">size</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;<span class="keyword">return</span> n&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span>:</span><br><span class="line">    <span class="built_in">std</span>::<span class="keyword">size_t</span> n;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derived</span> :</span> <span class="keyword">private</span> Base&#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">using</span> Base::size;  <span class="comment">//将private继承而来的size()访问属性变成public，原先是private的</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span>:</span><br><span class="line">    <span class="keyword">using</span> Base::n;    <span class="comment">//将private继承而来的n访问属性变成public，原先是private的</span></span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>默认的继承保护级别</strong></p>
+<p><kbd>class</kbd>默认是私有继承，<kbd>struct</kbd>默认是共有继承。</p>
+<p>class和struct的唯一区别就是<font color=red>成员访问说明符和派生访问说明符的默认属性</font>。</p>
+<h3 id="继承中的类作用域"><a href="#继承中的类作用域" class="headerlink" title="继承中的类作用域"></a>继承中的类作用域</h3><p>派生类的作用域嵌套与基类的作用域之内。<font color=orange>派生类的成员会隐藏基类的同名成员，即使形参列表不一样也会隐藏</font>，因为C++中名字查找先于类型检查，也就是先检查成员名字，如果有相同名字就隐藏，还未轮到类型检查。<font color=red>这也就是为什么基类和派生类的虚函数必须要有相同的形参列表。</font></p>
+<p>如果要使用基类的同名成员，可以使用作用域运算符::来调用被隐藏的成员。</p>
+<h3 id="构造函数与拷贝控制"><a href="#构造函数与拷贝控制" class="headerlink" title="构造函数与拷贝控制"></a>构造函数与拷贝控制</h3><p><strong>虚析构函数</strong></p>
+<p>基类通常应该定义一个虚析构函数。为什么呢？？</p>
+<p>因为当基类指针指向派生类对象时，delete基类指针，如果析构函数不是虚函数，那么调用的是基类的析构函数（会产生未定义行为），但实际上应该执行的是派生类的析构函数，因为指针指向的是一个派生类的对象。所以析构函数需要是虚函数才会在运行时确定该执行基类的析构函数还是派生类的析构函数。  只要基类的析构函数是虚函数，就能保证delete基类指针时执行的是正确的析构函数。</p>
+<p>如果一个类定义了析构函数，即使是以=default形式定义的，编译器也不会为这个类合成一定操作。</p>
+<p>如果一个类定义了拷贝构造函数，编译器就不会合成移动构造函数。</p>
+<p>如果需要使用移动操作，那么必须从基类开始逐一定义移动操作。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//例如Quote中定义了虚析构函数，那么就没有合成的移动操作，必须自己定义移动操作。</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Quote</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    Quote() = <span class="keyword">default</span>;</span><br><span class="line">    Quote(<span class="keyword">const</span> Quote&amp;) = <span class="keyword">default</span>;   <span class="comment">//显式定义拷贝控制函数，逐一拷贝成员</span></span><br><span class="line">    Quote(Quote&amp;&amp;) = <span class="keyword">default</span>;        <span class="comment">//显式定义移动构造函数，逐一移动成员</span></span><br><span class="line">    Quote&amp; <span class="keyword">operator</span> = (<span class="keyword">const</span> Quote&amp;) = <span class="keyword">default</span>;  <span class="comment">//显式定义拷贝赋值运算符</span></span><br><span class="line">    Quote&amp; <span class="keyword">operator</span> = (Quote&amp;&amp;) = <span class="keyword">default</span>;    <span class="comment">//显式定义移动赋值运算符</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">virtual</span> ~Quote() = <span class="keyword">default</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>定义派生类的拷贝或移动构造函数</strong></p>
+<p>若要正确地定义派生类的拷贝和移动构造函数，那么必须在派生类的构造函数初始化列表中显式地调用拷贝或移动构造函数。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span>&#123;</span><span class="comment">/*...*/</span>&#125;;  <span class="comment">//基类中定义有了拷贝构造函数和移动构造函数</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span> :</span> <span class="keyword">public</span> Base&#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    D(<span class="keyword">const</span> D&amp; d) : Base(d) , ..., &#123;&#125;  <span class="comment">//显式调用基类拷贝构造函数来拷贝基类中的成员。</span></span><br><span class="line">    <span class="comment">//显式调用基类移动构造函数来移动基类中的成员</span></span><br><span class="line">    D(D&amp;&amp; d) : Base(<span class="built_in">std</span>::move(d)) , ..., &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//如果是这样的话，派生类的基类部分将会使用默认构造函数，派生类自己的部分使用拷贝构造函数</span></span><br><span class="line">    D(<span class="keyword">const</span> D&amp; d) : <span class="comment">/*初始化派生类数据成员*/</span> &#123;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>默认情况下，派生类使用基类的默认构造函数初始化派生类对象的基类部分，如果想要拷贝或移动派生类，必须在派生类的拷贝或移动构造函数的初始化列表中显式地调用基类的拷贝或移动构造函数。</p>
+</blockquote>
+<p><strong>派生类的赋值运算符</strong></p>
+<p>派生类的赋值运算符必须显式地为派生类的基类部分赋值。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">D&amp; D::<span class="keyword">operator</span> = (<span class="keyword">const</span> D&amp; rhs)&#123;</span><br><span class="line">    Base::<span class="keyword">operator</span>=(rhs);   <span class="comment">//显式地为基类赋值</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//为派生类部分赋值</span></span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>派生类析构函数</strong></p>
+<p>派生类析构函数只负责销毁派生类分配的内存。</p>
+<p>对象销毁顺序与生成顺序相反：先执行派生类的析构函数，再执行基类的析构函数，直到继承体系得顶端。</p>
+<p><strong>在构造函数和析构函数中调用虚函数得情况</strong></p>
+<p>如果构造函数或析构函数调用了某个虚函数，那么执行得是与构造函数或者析构函数所属类型相对应的虚函数版本。</p>
+<p><strong>继承的构造函数</strong></p>
+<p>实际上基类的构造函数是不能被继承的，所以准确来说构造函数并不是继承而来的。在派生类中调用基类的构造函数的方法是使用using语句。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bulk_quote</span> :</span> <span class="keyword">public</span> Disc_quote&#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">using</span> Disc_quote::Disc_quote;  <span class="comment">//使Disc_quote构造函数在派生类中可见，这里是基类全部的构造函数，不止某一个</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>一些特点：</p>
+<blockquote>
+<p>基类的构造函数含有默认实参，那么派生类将获得多个构造函数，每个构造函数分别省略掉一个默认形参。<br>默认、拷贝和移动构造函数不会被继承。这些构造函数按照正常规则被合成。继承而来的构造函数不会被视为用户定义的构造函数，也就是说一个类如果含有继承来的构造函数，那么它也将拥有一个合成的默认构造函数。</p>
+</blockquote>
+<h3 id="容器与继承"><a href="#容器与继承" class="headerlink" title="容器与继承"></a>容器与继承</h3><p>用容器可以存放继承体系中不同的对象，但是存的应该是<strong>基类的指针</strong>，而不是具体的对象。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">shared_ptr</span>&lt;Quote&gt;&gt; basket;   <span class="comment">//存放指针的容器</span></span><br><span class="line">basket.push_back(make_shared&lt;Quote&gt;(<span class="string">&quot;0-000-1&quot;</span>, <span class="number">50</span>));</span><br><span class="line">basket.push_back(make_shared&lt;Bulk_quote&gt;(<span class="string">&quot;0-000-2&quot;</span>, <span class="number">50</span>, <span class="number">10</span>, <span class="number">.25</span>));</span><br><span class="line"><span class="comment">//调用的是Quote的版本，因为basket存的元素类型是Quote</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; basket.back()-&gt;net_price(<span class="number">15</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>例子：定义basket类</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Basket</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">add_item</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;Quote&gt; &amp;sale)</span></span>&#123;</span><br><span class="line">        item.insert(sale);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">total_receipt</span><span class="params">(<span class="built_in">std</span>::ostream&amp;)</span> <span class="keyword">const</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">//用于multiset中的元素排序</span></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">bool</span> <span class="title">compare</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;Quote&gt; &amp;lhs, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;Quote&gt; &amp;rhs)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> lhs-&gt;isbn() &lt; rhs-&gt;isbn();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">multiset</span>&lt;<span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;Quote&gt;&gt;, <span class="keyword">decltype</span>(compare)*&gt; items&#123;compare&#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" class="archive-article-date">
-  	<time datetime="2020-12-01T08:05:18.994Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/12/01/C++Primer-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-12-01T08:04:08.615Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E9%87%8D%E8%BD%BD%E8%BF%90%E7%AE%97%E4%B8%8E%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" class="archive-article-date">
-  	<time datetime="2020-12-01T08:02:39.463Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+<nav id="article-nav">
+  
+  
+    <a href="/2020/12/01/C++Primer-%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/" class="archive-article-date">
-  	<time datetime="2020-12-01T08:01:20.342Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E6%8B%B7%E8%B4%9D%E6%8E%A7%E5%88%B6/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:59:43.813Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+        
+        
+    </div>
+</aside>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:58:25.927Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:57:19.076Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-IO%E5%BA%93/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:55:39.897Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E5%87%BD%E6%95%B0/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:54:34.153Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:53:31.560Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &amp;raquo;</a>
-    </nav>
+  
+
+  
+    <section id="comments">
+      <div id="disqus_thread"></div>
+        <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'true'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </section>
+  
+
   
 
 
@@ -402,8 +460,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

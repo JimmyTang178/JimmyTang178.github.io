@@ -6,13 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives | JimmyTang&#39;Blog</title>
+  <title>JimmyTang&#39;Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="重载运算与类型转换基本概念基本格式 123返回类型 operator 运算符 (参数列表)&amp;#123;&amp;#125; 重载运算符参数数目与该运算符作用的运算对象个数一样，例如重载&#x3D;运算符，其参数列表中的参数数目应该为2。但是，如果重载运算符为类的成员函数，那么其左侧的运算对象会绑定到隐式的this指针上，所以成员函数运算符的参数个数比运算符操作对象个数少1个。 重载的运算符的优先级与内置类型的对应运">
+<meta property="og:type" content="article">
 <meta property="og:title" content="JimmyTang&#39;Blog">
-<meta property="og:url" content="http://example.com/archives/index.html">
+<meta property="og:url" content="http://example.com/2020/12/01/C++Primer-%E9%87%8D%E8%BD%BD%E8%BF%90%E7%AE%97%E4%B8%8E%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/index.html">
 <meta property="og:site_name" content="JimmyTang&#39;Blog">
+<meta property="og:description" content="重载运算与类型转换基本概念基本格式 123返回类型 operator 运算符 (参数列表)&amp;#123;&amp;#125; 重载运算符参数数目与该运算符作用的运算对象个数一样，例如重载&#x3D;运算符，其参数列表中的参数数目应该为2。但是，如果重载运算符为类的成员函数，那么其左侧的运算对象会绑定到隐式的this指针上，所以成员函数运算符的参数个数比运算符操作对象个数少1个。 重载的运算符的优先级与内置类型的对应运">
 <meta property="og:locale">
+<meta property="article:published_time" content="2020-12-01T08:02:39.463Z">
+<meta property="article:modified_time" content="2020-12-01T08:02:39.463Z">
 <meta property="article:author" content="JimmyTang">
 <meta name="twitter:card" content="summary">
   
@@ -150,235 +154,271 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-C++Primer-重载运算与类型转换" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="重载运算与类型转换"><a href="#重载运算与类型转换" class="headerlink" title="重载运算与类型转换"></a>重载运算与类型转换</h1><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>基本格式</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">返回类型 <span class="keyword">operator</span> 运算符 (参数列表)&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重载运算符参数数目与该运算符作用的运算对象个数一样，例如重载=运算符，其参数列表中的参数数目应该为2。<br>但是，如果重载运算符为类的成员函数，那么其左侧的运算对象会绑定到隐式的this指针上，所以成员函数运算符的参数个数比运算符操作对象个数少1个。</p>
+<p><font color=red>重载的运算符的优先级与内置类型的对应运算符的优先级一致。</font></p>
+<p><strong>定义为成员函数OR非成员函数？</strong></p>
+<ul>
+<li>赋值=、下标[]、函数调用()、成员访问运算符-&gt;必须是成员函数。</li>
+<li>符合赋值运算符(+= -=…)一般是成员函数，但非必须。</li>
+<li>改变对象状态的运算符或者与给定类型密切相关的运算符，递增++、递减–、解引用*等一般应该是成员运算符。</li>
+<li>具有对称性的运算符、如算术运算符、关系运算符、位运算符等应该是非成员运算符。</li>
+</ul>
+<h3 id="重载的例子"><a href="#重载的例子" class="headerlink" title="重载的例子"></a>重载的例子</h3><p><strong>输入输出运算符&gt;&gt; 和 &lt;&lt;</strong></p>
+<p>一般来说，输入输出运算符的重载形式为：stream&amp; operator 输入输出流运算符 (流普通引用, 操作对象);</p>
+<p><font color=red>输入输出运算符必须是非成员函数。</font>因为它的返回对象是一个流的引用而非自定义的类对象引用。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//以Sales_data类为例</span></span><br><span class="line"><span class="function">ostream &amp;<span class="title">operator</span> <span class="params">(ostream&amp; os, <span class="keyword">const</span> Sales_data &amp;item)</span></span>&#123;</span><br><span class="line">    os &lt;&lt; item.isbn() &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; item.units_sold &lt;&lt; <span class="string">&quot; &quot;</span></span><br><span class="line">    &lt;&lt; item.revenue() &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; item.avg_price();</span><br><span class="line">    <span class="keyword">return</span> os;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">istream &amp;<span class="title">operator</span> <span class="params">(istream&amp; is, Sales_data &amp;item)</span></span>&#123; <span class="comment">//与&gt;&gt;不同，这里的第二个参数必须为非const得，因为读入会改变操作对象。</span></span><br><span class="line">    <span class="keyword">double</span> price;</span><br><span class="line">    is &gt;&gt; item.bookNo &gt;&gt; item.units_sold &gt;&gt; price;</span><br><span class="line">    <span class="keyword">if</span>(is)&#123;                                 <span class="comment">//检查输入是否成功</span></span><br><span class="line">        item.revenue = item.units.sold * price;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        item = Sales_data();    <span class="comment">//输入失败，赋予默认构造得值</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> is;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重载输入运算符与输出运算符的一个不同就是输入运算符需要确保输入操作是否成功。</p>
+<p><strong>算数和关系运算符</strong></p>
+<p>相等运算符</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//还是以Sales_data为例</span></span><br><span class="line"><span class="keyword">bool</span> <span class="keyword">operator</span> == (<span class="keyword">const</span> Sales_data &amp;rhs, <span class="keyword">const</span> Sales_data &amp;lhs)&#123;</span><br><span class="line">    <span class="keyword">return</span> lhs.isbn() == rhs.isbn() &amp;&amp; lhs.units_sold == rhs.units_sold &amp;&amp; lhs.revenue == rhs.revenue;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//一般情况下定义了==也应该定义！=</span></span><br><span class="line"><span class="keyword">bool</span> <span class="keyword">operator</span> != (<span class="keyword">const</span> Sales_data &amp;rhs, <span class="keyword">const</span> Sales_data &amp;lhs)&#123;</span><br><span class="line">    <span class="keyword">return</span> !(lhs == rhs);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>关系运算符</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    Person(<span class="built_in">string</span> name, <span class="keyword">int</span> age) : name(name), age(age) &#123;&#125;</span><br><span class="line">    <span class="keyword">bool</span> <span class="keyword">operator</span> &lt; ( <span class="keyword">const</span> Person&amp; rhs);</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">string</span> name;</span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">bool</span> Person::<span class="keyword">operator</span> &lt; (<span class="keyword">const</span> Person&amp; rhs)&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>-&gt;age &lt; rhs.age;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="function">Person <span class="title">a</span><span class="params">(<span class="string">&quot;Jack&quot;</span>, <span class="number">23</span>)</span></span>;</span><br><span class="line">    <span class="function">Person <span class="title">b</span><span class="params">(<span class="string">&quot;Rose&quot;</span>, <span class="number">22</span>)</span></span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; (a &lt; b);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>定义一个关系运算符 &lt; 会使自定义类对象在调用标准库算法时很便利。</p>
+<p>赋值运算符</p>
+<p><font color=red>赋值运算符必须是成员函数。复合赋值运算符不一定必须是成员函数，但是为了与内置类型的复合赋值运算符保持一致，一般定义为成员函数。</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//从给定的初始化列表赋值</span></span><br><span class="line">Person&amp; Person::<span class="keyword">operator</span> = (<span class="built_in">initializer_list</span>&lt;<span class="built_in">string</span>&gt; il)&#123;</span><br><span class="line">    <span class="comment">//alloc_n_copy分配内存空间和拷贝给定范围内的元素</span></span><br><span class="line">    <span class="keyword">auto</span> data = alloc_n_copy(il.begin(), il.end());</span><br><span class="line"></span><br><span class="line">    <span class="comment">//如果对象之前分配有内存，先释放它，Person类没有，所以不释放。</span></span><br><span class="line"></span><br><span class="line">    name = data.first;</span><br><span class="line">    age = data.second;</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>initializer_list<T>是一种模板类型，其中 的元素永远是常量值，无法改变。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">il.begin();  <span class="comment">//初始化列表首元素</span></span><br><span class="line">il.end();</span><br><span class="line">il.size();</span><br></pre></td></tr></table></figure>
+<p><strong>下标运算符</strong></p>
+<p><font color=red>下标运算符必须是成员函数。</font>为与原始下标保持一致，一般返回所访问元素的引用。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StrVec</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span>&amp; <span class="keyword">operator</span> [](<span class="built_in">std</span>::<span class="keyword">size_t</span> n)&#123;</span><br><span class="line">        <span class="keyword">return</span> element[n];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//一般来说定义常量版本和非常量版本</span></span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; <span class="keyword">operator</span> [](<span class="built_in">std</span>::<span class="keyword">size_t</span> n)&#123;</span><br><span class="line">        <span class="keyword">return</span> element[n];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span>* element;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>递增递减运算符</strong></p>
+<ol>
+<li><p>前置运算符与后置运算符的区别是，后置运算符的参数列表需要有一个int形参。</p>
+</li>
+<li><p>一般先定义前置运算符，之后在定义后置运算符时可以利用定义好的前置运算符进行递增或递减。</p>
+</li>
+<li><p>前置运算符返回该类型的引用，而后置运算符返回一个临时对象。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyNumber</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    MyNumber(<span class="keyword">int</span> n) :num(n) &#123;&#125;</span><br><span class="line">    <span class="comment">//前置返回类型引用</span></span><br><span class="line">    MyNumber&amp; <span class="keyword">operator</span> ++()&#123;</span><br><span class="line">        ++num;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    MyNumber&amp; <span class="keyword">operator</span> --()&#123;</span><br><span class="line">        --num;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//后置返回该类型的临时对象，参数列表有int形参。</span></span><br><span class="line">    MyNumber <span class="keyword">operator</span> ++(<span class="keyword">int</span>)&#123;</span><br><span class="line">        MyNumber tmp = *<span class="keyword">this</span>;</span><br><span class="line">        ++num;</span><br><span class="line">        <span class="keyword">return</span> tmp;</span><br><span class="line">    &#125;</span><br><span class="line">    MyNumber <span class="keyword">operator</span> --(<span class="keyword">int</span>)&#123;</span><br><span class="line">        MyNumber tmp = *<span class="keyword">this</span>;</span><br><span class="line">        --num;</span><br><span class="line">        <span class="keyword">return</span> tmp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">get_num</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> num;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> num = <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>其实重载的运算符可以显式地调用，也就是以一般的函数形式进行调用，但是一般不这样用。</p>
+</li>
+</ol>
+<p><strong>成员访问运算符</strong></p>
+<ul>
+<li>箭头运算符-&gt;必须是成员函数，解引用运算符一般也是成员函数。</li>
+<li>重载的箭头运算符永远都是执行访问成员的操作，而重载的其他运算符可以执行与默认运算符不一样的操作。</li>
+</ul>
+<p><strong>重载函数调用运算符</strong></p>
+<p>作用就是让类的对象像函数一样进行调用。<br>必须是成员函数。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">AbsInt</span>&#123;</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">operator</span><span class="params">()</span> <span class="params">(<span class="keyword">int</span> val)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> val &lt; <span class="number">0</span> ? -val : val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> i = <span class="number">-100</span>;</span><br><span class="line">AbsInt <span class="built_in">abs</span>;</span><br><span class="line"><span class="keyword">int</span> a = <span class="built_in">abs</span>(i);</span><br></pre></td></tr></table></figure>
+<p>如果一个类定义了函数调用运算符，那么这个类的对象一般称为<strong>函数对象</strong>。而函数对象通常可以作为泛型算法的实参。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; vs = &#123;<span class="string">&quot;Jack&quot;</span>, <span class="string">&quot;Rose&quot;</span>&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PrintString</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    PrintString(ostream&amp; o = <span class="built_in">cout</span>, <span class="keyword">char</span> c = <span class="string">&#x27; &#x27;</span>) : os(o), sep(c)&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">operator</span> <span class="params">()</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s)</span> <span class="keyword">const</span> </span>&#123;</span><br><span class="line">        os &lt;&lt; s &lt;&lt; sep;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    ostream &amp;os;</span><br><span class="line">    <span class="keyword">char</span> sep;</span><br><span class="line">&#125;;</span><br><span class="line">PrintString printer;</span><br><span class="line">printer(s);  <span class="comment">//cout中打印s，以空格为分隔符</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//调用for_each算法，将vs中的字符逐一输出到cerr中，以换行符为分隔符。</span></span><br><span class="line">for_each(vs.begin(), vs.end(), PrintString(<span class="built_in">cerr</span>, <span class="string">&#x27;\n&#x27;</span>));</span><br></pre></td></tr></table></figure>
+
+<p><strong>lambda表达式是函数对象</strong></p>
+<p>定义一个lambda表达式后，编译器其实将该表达式翻译成了一个<font color=red>未命名类的未命名对象</font>。也就是说该未命名的类重载了函数调用运算符 () 。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">stable_sort(words.begin(), words.end(), </span><br><span class="line">            [](<span class="keyword">const</span> <span class="built_in">string</span> &amp;a, <span class="keyword">const</span> <span class="built_in">string</span> &amp;b) &#123;<span class="keyword">return</span> a.size() &lt; b.size();&#125;);</span><br><span class="line"><span class="comment">//默认情况下lambda表达式不能该变它捕获的变量。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//这里的lambda表达式类似于下面：</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShorterString</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">operator</span> <span class="params">()</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s1, <span class="keyword">const</span> <span class="built_in">string</span> &amp;s2)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> s1.size() &lt; s2.size();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//上面的stable_sort相当于：</span></span><br><span class="line">stable_sort(words.begin(), words.end(), ShorterString());</span><br><span class="line"><span class="comment">//stable_sort每次比较两个字符串时，会“调用”这个函数对象。</span></span><br></pre></td></tr></table></figure>
+
+<p>还有，lambda表达式以<font color = orange>引用捕获变量</font>时，其产生的类中不会生成对应的数据成员。若是以<font color=orange>值捕获</font>方式捕获变量时，其生成的类中会生成对应的数据成员，同时创建构造函数以拷贝的值来初始化该数据成员。生成的类不含默认构造函数、赋值运算符以及默认析构函数，默认的拷贝构造函数/移动构造函数视捕获的数据成员类型而定。书本P574.</p>
+<p><strong>标准库定义的函数对象</strong></p>
+<p>定义在functional头文件中。<br>一般情况下能使用标准库的函数对象就尽量使用标准库的函数对象。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>*&gt; nameTable;</span><br><span class="line"><span class="comment">//错误，不能直接比较两个指针的地址，未定义错误。</span></span><br><span class="line">sort(nameTable.begin(), nameTable.end(), </span><br><span class="line">        [](<span class="built_in">string</span> *a, <span class="built_in">string</span> *b)&#123;<span class="keyword">return</span> a &lt; b;&#125;)</span><br><span class="line"><span class="comment">//正确，标准库规定指针的less是定义过的。</span></span><br><span class="line">sort(nameTable.begin(), nameTable.end(), less&lt;<span class="built_in">string</span>*&gt;());</span><br></pre></td></tr></table></figure>
+<p>对于关联容器，因为关联容器使用less<key_type>来对元素排序，所以可以直接定义元素类型为指针的set或者map而无需声明less。</p>
+<p><strong>可调用对象与function</strong></p>
+<p>可调用对象包含：函数、函数指针、lambda表达式、bind创建的对象、重载了函数调用运算符的类。<br>不同的类型可能具有相同的调用形式。例如</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;<span class="keyword">return</span> i + j;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> mod = [] (<span class="keyword">int</span> i, <span class="keyword">int</span> j) &#123;<span class="keyword">return</span> i % j;&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">divide</span>&#123;</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">operator</span><span class="params">()</span> <span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> i / j;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//他们的调用形式都是</span></span><br><span class="line"><span class="keyword">int</span> (<span class="keyword">int</span>, <span class="keyword">int</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//用一个map来存储函数指针</span></span><br><span class="line"><span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>(*)(<span class="keyword">int</span>, <span class="keyword">int</span>)&gt; binops;</span><br><span class="line">binops.insert(&#123;<span class="string">&quot;+&quot;</span>, add&#125;);    <span class="comment">//正确，add是一个正确类型的函数指针。</span></span><br><span class="line"><span class="comment">//错误， divide和mod的调用形式与add一样，但类型不是int(*)(int, int)</span></span><br><span class="line">binops.insert(&#123;<span class="string">&quot;/&quot;</span>, divide&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>解决方法就是用functional头文件中的function。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">map</span>&lt;<span class="built_in">string</span>, function&lt;<span class="keyword">int</span>(<span class="keyword">int</span>, <span class="keyword">int</span>)&gt;&gt; binops;</span><br><span class="line">binops.insert(&#123;<span class="string">&quot;+&quot;</span>, add&#125;);</span><br><span class="line">binops.insert(&#123;<span class="string">&quot;/&quot;</span>, divide()&#125;);  <span class="comment">//重载了()的函数对象</span></span><br><span class="line">binops.insert(&#123;<span class="string">&quot;%&quot;</span>, mod&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//可以这样调用，function类型重载了调用运算符</span></span><br><span class="line">binops[<span class="string">&quot;+&quot;</span>](<span class="number">1</span>, <span class="number">2</span>);  <span class="comment">///调用add函数，输出3。</span></span><br></pre></td></tr></table></figure>
+
+<p>重载的函数不能直接放入function中。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//重载了add,无法区分</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>;</span><br><span class="line"><span class="function">Sales_data <span class="title">add</span><span class="params">(<span class="keyword">const</span> Sales_data&amp;, <span class="keyword">const</span> Sales_data&amp;)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">map</span>&lt;<span class="built_in">string</span>, function&lt;<span class="keyword">int</span>(<span class="keyword">int</span>, <span class="keyword">int</span>)&gt;&gt; binops;</span><br><span class="line">binops.insert(&#123;<span class="string">&quot;+&quot;</span>, add&#125;); <span class="comment">//错误，不能确定是那个add</span></span><br></pre></td></tr></table></figure>
+
+<p>解决方法，可以用：</p>
+<ol>
+<li>函数指针。</li>
+<li>lambda表达式</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> (*fp)(<span class="keyword">int</span>, <span class="keyword">int</span>) = add;  <span class="comment">//指向的是第一个add。</span></span><br><span class="line">binops.insert(&#123;<span class="string">&quot;+&quot;</span>, fp&#125;);</span><br><span class="line"></span><br><span class="line">binops.insert(&#123;<span class="string">&quot;+&quot;</span>, [](<span class="keyword">int</span> i, <span class="keyword">int</span> j)&#123;<span class="keyword">return</span> add(<span class="number">1</span>, <span class="number">2</span>)&#125;&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="重载、类型转换与运算符"><a href="#重载、类型转换与运算符" class="headerlink" title="重载、类型转换与运算符"></a>重载、类型转换与运算符</h3><p>一个形参的非<kbd>explicit</kbd>的构造函数隐式地定义了一种从形参类型到该类类型的隐式转换规则。</p>
+<p><strong>类型转换运算符</strong></p>
+<ul>
+<li>必须定义为成员函数。</li>
+<li>没有返回类型。</li>
+<li>形参列表必须为空。</li>
+<li>通常应该是const成员函数。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SmallInt</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    SmallInt(<span class="keyword">int</span> i = <span class="number">0</span>) : val(i)&#123;</span><br><span class="line">        <span class="keyword">if</span>(i &lt;<span class="number">0</span> || i &gt; <span class="number">255</span>)&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="built_in">std</span>::out_of_range(<span class="string">&quot;Bad SmallInt value&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">operator</span> <span class="title">int</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;<span class="keyword">return</span> value;&#125;  <span class="comment">//定义了转换为int的类型转换运算符。</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">std</span>::<span class="keyword">size_t</span> val;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">SmallInt si;</span><br><span class="line">si = <span class="number">3.14</span>;   <span class="comment">//先内置类型double转换成int，之后调用SmallInt(int)构造函数。</span></span><br><span class="line">si + <span class="number">3.14</span>;   <span class="comment">//int()先将si转换成int型，之后内置的Int型转换成double与3.14相加。</span></span><br></pre></td></tr></table></figure>
+<p>因为类型转换是**<em>隐式**</em>进行的，无法给函数传递实参，所以也就形参列表就为空。<br>注意避免过度使用类型转换运算符。一般来说，类很少定义类型转换运算符，除了bool之外。</p>
+<p>隐式的类型转换会存在意想不到的问题，所以引入了<strong>显式的类型转换运算符</strong>。也就是在转换运算符前加上explicit。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SmallInt</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="keyword">operator</span> <span class="title">int</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;<span class="keyword">return</span> val;&#125;  <span class="comment">//显式类型转换</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">SmallInt si;</span><br><span class="line"><span class="comment">//这种情况下，需要显式地声明类型转换才会进行类型的转换。</span></span><br><span class="line"><span class="keyword">int</span> ans = <span class="keyword">static_cast</span>&lt;<span class="keyword">int</span>&gt;(si) + <span class="number">3</span>;  <span class="comment">//显式地调用operator int()</span></span><br></pre></td></tr></table></figure>
+<p>一般来说，显式声明的类型转换运算符需要显式地调用，只有一个例外：表达式被用作条件时，显式的类型转换将会被隐式地执行。</p>
+<ol>
+<li>在if、while以及do语句的条件部分。</li>
+<li>for语句的条件表达式。</li>
+<li>逻辑与或非(&amp;&amp;,||,!)。</li>
+<li>条件运算符(? : )的条件部分。</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (si &gt; <span class="number">10</span>)&#123;  <span class="comment">//si被隐式地转换成int型。</span></span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于IO流，无论什么时候在条件中使用流，都会使用流定义的operator bool类型转换运算符。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="built_in">std</span>::<span class="built_in">cin</span> &gt;&gt; i)&#123; ... &#125; <span class="comment">//cin将数据读入i并返回cin。这个时候cin就会隐式地执行operator bool将返回的cin转换成bool用于条件判断。</span></span><br></pre></td></tr></table></figure>
+<p>而且一般来说， bool类型转换应该定义成explicit的，因为它一般只用在条件语句中。</p>
+<p><strong>避免有二义性的类型转换</strong></p>
+<p>不要定义多种从类型A到类型B的转换路径，一般只要一对一的转换，否则在类型转换时，编译器不知道调用哪种转换方式。(书本P584)</p>
+<p><font color=red>总的来说，除了显式地定义向bool的转换之外，尽量避免定义类型转换函数和非显式的单形参的构造函数。</font></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" class="archive-article-date">
-  	<time datetime="2020-12-01T08:05:18.994Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/12/01/C++Primer-%E9%87%8D%E8%BD%BD%E8%BF%90%E7%AE%97%E4%B8%8E%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-12-01T08:04:08.615Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E9%87%8D%E8%BD%BD%E8%BF%90%E7%AE%97%E4%B8%8E%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" class="archive-article-date">
-  	<time datetime="2020-12-01T08:02:39.463Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+<nav id="article-nav">
+  
+    <a href="/2020/12/01/C++Primer-%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/12/01/C++Primer-%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/" class="archive-article-date">
-  	<time datetime="2020-12-01T08:01:20.342Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E6%8B%B7%E8%B4%9D%E6%8E%A7%E5%88%B6/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:59:43.813Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+        
+        
+    </div>
+</aside>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:58:25.927Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:57:19.076Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-IO%E5%BA%93/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:55:39.897Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E5%87%BD%E6%95%B0/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:54:34.153Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/C++Primer-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-12-01T07:53:31.560Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &amp;raquo;</a>
-    </nav>
+  
+
+  
+    <section id="comments">
+      <div id="disqus_thread"></div>
+        <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'true'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </section>
+  
+
   
 
 
@@ -402,8 +442,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
