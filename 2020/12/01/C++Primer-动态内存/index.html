@@ -8,16 +8,16 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>JimmyTang&#39;Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="动态内存C++内存分配模型静态(全局)内存：存储局部static对象、类static数据成员、定义在任何函数之外的对象。static对象在使用之前分配内存，程序结束时销毁。  内存在程序编译的时候已经分配好，运行期间都存在。  栈内存：存储定义在函数内的非static对象（局部非静态变量）。仅在定义的函数块运行时才存在。  栈内存分配运算内置于指令集，效率高，但是容量有限。  **堆内存(自由空间">
+  <meta name="description" content="动态内存">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JimmyTang&#39;Blog">
 <meta property="og:url" content="http://example.com/2020/12/01/C++Primer-%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/index.html">
 <meta property="og:site_name" content="JimmyTang&#39;Blog">
-<meta property="og:description" content="动态内存C++内存分配模型静态(全局)内存：存储局部static对象、类static数据成员、定义在任何函数之外的对象。static对象在使用之前分配内存，程序结束时销毁。  内存在程序编译的时候已经分配好，运行期间都存在。  栈内存：存储定义在函数内的非static对象（局部非静态变量）。仅在定义的函数块运行时才存在。  栈内存分配运算内置于指令集，效率高，但是容量有限。  **堆内存(自由空间">
+<meta property="og:description" content="动态内存">
 <meta property="og:locale">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/2020061722333879.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MDMxMzk0MA==,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="article:published_time" content="2020-12-01T08:01:20.342Z">
-<meta property="article:modified_time" content="2020-12-01T08:01:20.342Z">
+<meta property="article:published_time" content="2020-12-01T08:10:59.235Z">
+<meta property="article:modified_time" content="2020-12-01T08:10:59.235Z">
 <meta property="article:author" content="JimmyTang">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/2020061722333879.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MDMxMzk0MA==,size_16,color_FFFFFF,t_70#pic_center">
@@ -161,7 +161,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="动态内存"><a href="#动态内存" class="headerlink" title="动态内存"></a>动态内存</h1><h2 id="C-内存分配模型"><a href="#C-内存分配模型" class="headerlink" title="C++内存分配模型"></a>C++内存分配模型</h2><p><strong>静态(全局)内存</strong>：存储局部static对象、类static数据成员、定义在任何函数之外的对象。static对象在使用之前分配内存，程序结束时销毁。</p>
+        <h1 id="动态内存"><a href="#动态内存" class="headerlink" title="动态内存"></a>动态内存</h1><a id="more"></a>
+
+<h2 id="C-内存分配模型"><a href="#C-内存分配模型" class="headerlink" title="C++内存分配模型"></a>C++内存分配模型</h2><p><strong>静态(全局)内存</strong>：存储局部static对象、类static数据成员、定义在任何函数之外的对象。static对象在使用之前分配内存，程序结束时销毁。</p>
 <blockquote>
 <p>内存在程序编译的时候已经分配好，运行期间都存在。</p>
 </blockquote>
@@ -484,7 +486,7 @@ delete之后指针变成了悬空指针，在<font color=red>delete之后置为n
   
 <nav id="article-nav">
   
-    <a href="/2020/12/01/C++Primer-%E9%87%8D%E8%BD%BD%E8%BF%90%E7%AE%97%E4%B8%8E%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/12/01/C++Primer-%E6%8B%B7%E8%B4%9D%E6%8E%A7%E5%88%B6/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
@@ -494,7 +496,7 @@ delete之后指针变成了悬空指针，在<font color=red>delete之后置为n
     </a>
   
   
-    <a href="/2020/12/01/C++Primer-%E6%8B%B7%E8%B4%9D%E6%8E%A7%E5%88%B6/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/12/01/C++Primer-%E5%87%BD%E6%95%B0/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title"></div>
       <i class="icon-circle-right"></i>
     </a>

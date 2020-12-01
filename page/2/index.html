@@ -152,96 +152,15 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-C++Primer-语句" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-C++Primer-IO库" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="语句"><a href="#语句" class="headerlink" title="语句"></a>语句</h1><p><strong>switch-case语句</strong></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> aCnt = <span class="number">0</span>, iCnt = <span class="number">0</span>, eCnt = <span class="number">0</span>, oCnt = <span class="number">0</span>, uCnt = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">char</span> ch;</span><br><span class="line"><span class="keyword">while</span>(<span class="built_in">cin</span> &gt;&gt; ch)&#123;</span><br><span class="line">    <span class="keyword">switch</span> (ch)&#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;a&#x27;</span>:</span><br><span class="line">            ++aCnt;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;e&#x27;</span>:</span><br><span class="line">            ++eCnt;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;i&#x27;</span>:</span><br><span class="line">            ++iCnt;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;o&#x27;</span>:</span><br><span class="line">            ++oCnt;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;u&#x27;</span>:</span><br><span class="line">            ++uCnt;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span> :</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>case标签必须是整型常量表达式。</p>
-<p><strong>传统for循环</strong></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (init-statement; condition; expression)</span><br><span class="line">    statement</span><br></pre></td></tr></table></figure>
-<p>能省略掉三个部分中任意一个或者全部。如果省略condition，则默认为true。<br>但是init-statement只能由一句声明语句，因此所有的变量基础类型必须相同。</p>
-<p><strong>范围for语句</strong><br>C++11新标准</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (declaration : expression)</span><br><span class="line">    statement</span><br></pre></td></tr></table></figure>
-
-<p><strong>while语句</strong></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (condition)</span><br><span class="line">    statement</span><br></pre></td></tr></table></figure>
-<p><strong>do-while语句</strong></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span> </span><br><span class="line">    statement</span><br><span class="line"><span class="keyword">while</span> (condition); <span class="comment">//注意分号</span></span><br></pre></td></tr></table></figure>
-<p>condition变量必须定义在循环体之外。</p>
-<h3 id="try语句块和异常处理"><a href="#try语句块和异常处理" class="headerlink" title="try语句块和异常处理"></a>try语句块和异常处理</h3><p><strong>throw表达式</strong></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Sales_item item1, item2;</span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; item1 &gt;&gt; item2;</span><br><span class="line"><span class="keyword">if</span>(item1.isbn() != item2.isbn())&#123;</span><br><span class="line">    <span class="keyword">throw</span> runtime_error(<span class="string">&quot;Data must refer to the same ISBN&quot;</span>); <span class="comment">//字符串初始化一个runtime_error对象</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; item1 + item2 &lt;&lt;<span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
-
-<p><strong>try语句块</strong></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    program-statements</span><br><span class="line">&#125; </span><br><span class="line">    <span class="keyword">catch</span> (exception-declaration)&#123;</span><br><span class="line">        handle-statements</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (exception-declaration)&#123;</span><br><span class="line">        handle-statements</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>其中声明在try语句块内部的变量在外部无法访问，catch块中也是。</p>
-<p><strong>标准异常</strong><br>异常类包含在4个头文件中。</p>
-<ul>
-<li><p>exception头文件定义了最常用的异常类exception。只报告异常的发生，不提供任何额外信息。</p>
-</li>
-<li><p>stdexcept头文件定义了集中常用的异常类。</p>
-</li>
-<li><p>new头文件定义了bad_alloc异常类型。</p>
-</li>
-<li><p>type_info定义了bad_cast异常类。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>stdexcept定义的异常类</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>exception</td>
-<td>最常见的问题</td>
-</tr>
-<tr>
-<td>runtime_error</td>
-<td>只有运行时才能检测出来的问题</td>
-</tr>
-<tr>
-<td>range_error</td>
-<td>运行时错误：生成的结果超出了有意义的值域范围</td>
-</tr>
-<tr>
-<td>overflow_error</td>
-<td>运行时错误：计算上溢</td>
-</tr>
-<tr>
-<td>underflow_error</td>
-<td>运行时错误：计算下溢</td>
-</tr>
-<tr>
-<td>logic_error</td>
-<td>程序逻辑错误</td>
-</tr>
-<tr>
-<td>domain_error</td>
-<td>逻辑错误，参数对应的结果值不存在</td>
-</tr>
-<tr>
-<td>invalid_argument</td>
-<td>逻辑错误：无效参数</td>
-</tr>
-<tr>
-<td>length_error</td>
-<td>逻辑错误：试图创建一个超出该类型最大长度的对象</td>
-</tr>
-<tr>
-<td>out_of_range</td>
-<td>逻辑错误：使用一个超出有效范围的值</td>
-</tr>
-</tbody></table>
-<p>对于exception、bad_alloc、bad_cast，只能以默认初始化的方式初始化，不允许为这些对象赋初值。<br>而其他类型的对象恰好相反，应当使用string对象或者C风格字符串初始化这些类型的对象，不能使用默认初始化方式。<br>异常类型只定义了一个what()成员函数，没有任何参数,返回一个指向C风格字符串的const char*。</p>
-<blockquote>
-<p>小练习 ：<br>编写一个程序，从标准输入读取两个数，输出第一个数除以第二个数的结果。用try语句捕获异常，并输出相应提示信息。</p>
-</blockquote>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdexcept&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>; <span class="keyword">using</span> <span class="built_in">std</span>::runtime_error;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> num1, num2;</span><br><span class="line">    <span class="keyword">int</span> ans;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; num1 &gt;&gt; num2;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(num2 == <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">throw</span> runtime_error(<span class="string">&quot;Divided by 0!!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        ans = num1 / num2;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; ans &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (runtime_error err)&#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; err.what() &lt;&lt; <span class="string">&quot;\nTry again? Enter y or n .&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">char</span> c;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; c;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">cin</span> || c == <span class="string">&#x27;n&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
+        <p>很久不学C++，不少东西都变得很模糊，之前上课老师讲的内容其实很少，很多特性没有介绍，知识体系不够完整。所以打算系统地自学，我知道这将是很漫长的一段自学之路，我也不确定能否坚持完成，暂且就先且行且记录吧。我用的是目前最新的第五版，基于C++11标准的，介绍很多现代C++的新特性。</p>
+        
+          <a class="article-more-a" href="/2020/12/01/C++Primer-IO%E5%BA%93/#more">more >></a>
+        
       
 
       
@@ -253,7 +172,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/01/C++Primer-%E8%AF%AD%E5%8F%A5/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/12/01/C++Primer-IO%E5%BA%93/">展开全文 >></a>
         </p>
       
 
